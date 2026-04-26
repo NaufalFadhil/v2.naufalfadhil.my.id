@@ -7,6 +7,7 @@ export type Experience = {
   type: "Full-time" | "Part-time" | "Internship" | "Freelance" | "Contract";
   start: string;
   end?: string;
+  summary: string;
   description: string[];
   tech: string[];
 };
@@ -19,6 +20,7 @@ export const experiences: Experience[] = [
     location: "Jakarta, Indonesia",
     type: "Full-time",
     start: "2025-08-05",
+    summary: "Building and scaling a messaging platform used by millions — spanning backend services, feature development, and legacy migration.",
     description: [
       "Developed and maintained a messaging platform used by millions of users, ensuring high performance and reliability.",
       "Implemented new features and optimized existing ones to enhance user experience and engagement.",
@@ -38,6 +40,7 @@ export const experiences: Experience[] = [
     type: "Part-time",
     start: "2023-01-01",
     end: "2023-05-31",
+    summary: "Developed a Certificate Management System serving 50+ insurance companies across Indonesia, handling full-stack development and end-user support.",
     description: [
       "Developed and maintained Certificate Management System used by 50+ insurance companies across Indonesia.",
       "Implemented new features, fixed bugs, and optimized performance to ensure smooth operations.",
@@ -57,6 +60,7 @@ export const experiences: Experience[] = [
     type: "Part-time",
     start: "2022-08-01",
     end: "2023-01-01",
+    summary: "Built internal tools for scheduling and academic management at the university lab, supporting lecturers and students.",
     description: [
       "Built and maintained internal tools to assist lecturers and students in managing academic activities.",
       "Developed a web-based application for scheduling and managing lab sessions, improving efficiency and organization.",
