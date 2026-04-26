@@ -52,9 +52,6 @@ export function ExperienceTimeline() {
                     <span className="text-xs text-muted-foreground whitespace-nowrap">
                       {formatDate(exp.start)} — {exp.end ? formatDate(exp.end) : "Present"}
                     </span>
-                    <span className="text-xs text-muted-foreground">
-                      {calculateDuration(exp.start, exp.end)}
-                    </span>
                     <Badge variant="secondary" className="text-xs font-normal">
                       {exp.type}
                     </Badge>

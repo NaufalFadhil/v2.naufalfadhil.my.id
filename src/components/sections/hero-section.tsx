@@ -68,9 +68,9 @@ export function HeroSection() {
             {siteConfig.name}
           </h1>
           <p className="text-muted-foreground mt-1 text-lg">
-            Developer{" "}
+            Software Engineer{" "}
             <span className="text-foreground/40">·</span>{" "}
-            Student{" "}
+            Builder{" "}
             <span className="text-foreground/40">·</span>{" "}
             Alien
           </p>
@@ -81,9 +81,8 @@ export function HeroSection() {
           variants={itemVariants}
           className="text-muted-foreground leading-relaxed max-w-xl text-base"
         >
-          I build things for the web — from sleek frontends to robust backends.
-          Currently studying Informatics Engineering, shipping side projects, and
-          exploring the frontier of AI-powered tooling.
+          I'm a backend-focused engineer who genuinely enjoys the process of building things
+          — taking messy, complex problems and turning them into clean, working software. I work with PHP, Java, JavaScript, Go, and Rust, and I'm always excited to learn what's next.
         </motion.p>
 
         {/* CTA Buttons */}

@@ -54,7 +54,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
             href="/"
             className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity shrink-0"
           >
-            naufal<span className="text-muted-foreground">.dev</span>
+            <span className="text-muted-foreground">Naufal</span> Fadhil
           </Link>
 
           {/* Center nav — desktop */}
