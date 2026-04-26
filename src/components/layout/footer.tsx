@@ -7,6 +7,9 @@ const footerLinks = [
   { href: "/about", label: "About" },
   { href: "/experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
+  { href: "/certificates", label: "Certificates" },
+  { href: "/skills", label: "Skills" },
+  { href: "/achievements", label: "Achievements" },
   { href: "/blog", label: "Blog" },
   { href: "/link", label: "Links" },
   { href: "/supports", label: "Support" },
@@ -26,19 +29,14 @@ export function Footer() {
   return (
     <footer className="border-t border-border mt-24">
       <Container className="py-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {/* Brand */}
-          <div>
-            <Link
-              href="/"
-              className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity"
-            >
-              <span className="text-muted-foreground">Naufal Fadhil</span> Athallah
-            </Link>
-            <p className="text-xs text-muted-foreground mt-1">
-              Software Engineer · Builder · Alien
-            </p>
-          </div>
+          <Link
+            href="/"
+            className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity shrink-0"
+          >
+            <span className="text-muted-foreground">Naufal Fadhil</span> Athallah
+          </Link>
 
           {/* Nav links */}
           <ul className="flex flex-wrap gap-x-5 gap-y-1">
@@ -55,7 +53,7 @@ export function Footer() {
           </ul>
 
           {/* Social links */}
-          <ul className="flex items-center gap-3">
+          <ul className="flex items-center gap-3 shrink-0">
             {socialLinks.map(({ href, label, Icon }) => (
               <li key={label}>
                 <a
@@ -72,7 +70,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <p className="mt-8 text-xs text-muted-foreground text-center">
+        <p className="mt-6 text-xs text-muted-foreground text-center">
           © {year} {siteConfig.name}. Built with Next.js & Tailwind CSS.
         </p>
       </Container>

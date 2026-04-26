@@ -15,6 +15,13 @@ const iconMap: Record<string, React.ElementType> = {
   GitPullRequest,
 };
 
+const iconStyle: Record<string, { dot: string; icon: string }> = {
+  Trophy:        { dot: "bg-background border-amber-500",   icon: "text-amber-500"  },
+  Code2:         { dot: "bg-background border-indigo-500",  icon: "text-indigo-500" },
+  Star:          { dot: "bg-background border-violet-500",  icon: "text-violet-500" },
+  GitPullRequest:{ dot: "bg-background border-emerald-500", icon: "text-emerald-500" },
+};
+
 export default function AchievementsPage() {
   const byYear = achievements.reduce<Record<number, typeof achievements>>(
     (acc, a) => {
@@ -36,20 +43,33 @@ export default function AchievementsPage() {
         Awards, competitions, and milestones I&apos;m proud of.
       </p>
 
-      <div className="flex flex-col gap-12">
-        {years.map((year) => (
-          <section key={year}>
-            <h2 className="text-lg font-semibold mb-5">{year}</h2>
+      <div className="relative">
+        {/* Vertical line */}
+        <div className="absolute left-3.5 top-0 bottom-0 w-px bg-border" aria-hidden />
 
-            <div className="relative pl-6 border-l border-border space-y-6">
+        <div className="flex flex-col gap-8">
+          {years.map((year) => (
+            <section key={year} className="flex flex-col gap-6">
+              {/* Year marker */}
+              <div className="relative flex items-center pl-10">
+                <div className="absolute left-0 flex h-7 w-7 items-center justify-center rounded-full border-2 border-border bg-background shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-muted-foreground/40" />
+                </div>
+                <h2 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase">
+                  {year}
+                </h2>
+              </div>
+
               {byYear[year].map((achievement) => {
-                const Icon = iconMap[achievement.icon ?? "Trophy"] ?? Trophy;
+                const iconKey = achievement.icon ?? "Trophy";
+                const Icon = iconMap[iconKey] ?? Trophy;
+                const style = iconStyle[iconKey] ?? iconStyle["Trophy"];
                 return (
-                  <div key={achievement.id} className="relative">
-                    <div className="absolute -left-[25px] top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-border bg-background">
-                      <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+                  <div key={achievement.id} className="relative flex gap-6 pl-10">
+                    <div className={`absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 shadow-sm ${style.dot}`}>
+                      <Icon className={`h-3 w-3 ${style.icon}`} />
                     </div>
-                    <div className="rounded-xl border border-border bg-card p-4">
+                    <div className="flex-1 min-w-0 rounded-xl border border-border bg-card p-4">
                       <div className="flex items-start justify-between gap-2">
                         <h3 className="font-semibold text-sm leading-snug">
                           {achievement.title}
@@ -75,9 +95,9 @@ export default function AchievementsPage() {
                   </div>
                 );
               })}
-            </div>
-          </section>
-        ))}
+            </section>
+          ))}
+        </div>
       </div>
     </Container>
   );

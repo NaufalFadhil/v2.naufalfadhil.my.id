@@ -5,6 +5,14 @@ import { formatDate, calculateDuration } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 
+const typeStyle: Record<string, { dot: string; icon: string }> = {
+  "Full-time":  { dot: "bg-background border-indigo-500",  icon: "text-indigo-500" },
+  "Part-time":  { dot: "bg-background border-violet-500",  icon: "text-violet-500" },
+  "Internship": { dot: "bg-background border-amber-500",   icon: "text-amber-500"  },
+  "Freelance":  { dot: "bg-background border-emerald-500", icon: "text-emerald-500" },
+  "Contract":   { dot: "bg-background border-orange-500",  icon: "text-orange-500" },
+};
+
 export const metadata: Metadata = {
   title: "Experience",
   description: "My work history — companies I've worked with, roles I've held, and things I've shipped.",
@@ -25,11 +33,13 @@ export default function ExperiencePage() {
         <div className="absolute left-3.5 top-0 bottom-0 w-px bg-border" aria-hidden />
 
         <div className="flex flex-col gap-10">
-          {experiences.map((exp) => (
+          {experiences.map((exp) => {
+            const style = typeStyle[exp.type] ?? typeStyle["Full-time"];
+            return (
             <div key={exp.id} className="relative flex gap-6 pl-10">
               {/* Dot */}
-              <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-border bg-background shadow-sm">
-                <Briefcase className="h-3 w-3 text-muted-foreground" />
+              <div className={`absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 shadow-sm ${style.dot}`}>
+                <Briefcase className={`h-3 w-3 ${style.icon}`} />
               </div>
 
               {/* Content */}
@@ -79,7 +89,7 @@ export default function ExperiencePage() {
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </div>
     </Container>

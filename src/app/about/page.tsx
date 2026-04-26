@@ -87,21 +87,28 @@ export default function AboutPage() {
       {/* Journey */}
       <section className="mb-12">
         <SectionHeader title="Journey" />
-        <div className="relative pl-6 border-l border-border space-y-6">
-          {[
-            { year: "2024", title: "Going deeper into AI tooling", desc: "Exploring LLMs, agents, and building AI-powered products." },
-            { year: "2023", title: "First serious freelance work", desc: "Started taking freelance projects and building production apps for clients." },
-            { year: "2022", title: "Got into competitive programming", desc: "Joined the university team and fell in love with algorithms." },
-            { year: "2021", title: "Started university", desc: "Enrolled in Informatics Engineering. Switched from hobbyist to serious developer." },
-            { year: "2018", title: "First line of code", desc: "Built my first website at 14 — a fan site with Comic Sans and neon colors." },
-          ].map(({ year, title, desc }) => (
-            <div key={year} className="relative">
-              <div className="absolute -left-[25px] top-1 h-3 w-3 rounded-full border-2 border-border bg-background" />
-              <span className="text-xs font-medium text-muted-foreground">{year}</span>
-              <h3 className="text-sm font-semibold mt-0.5">{title}</h3>
-              <p className="text-sm text-muted-foreground mt-0.5">{desc}</p>
-            </div>
-          ))}
+        <div className="relative">
+          <div className="absolute left-3.5 top-0 bottom-0 w-px bg-border" aria-hidden />
+          <div className="flex flex-col gap-6">
+            {[
+              { year: "2024", title: "Going deeper into AI tooling", desc: "Exploring LLMs, agents, and building AI-powered products.", dot: "bg-background border-indigo-500", inner: "bg-indigo-500" },
+              { year: "2023", title: "First serious freelance work", desc: "Started taking freelance projects and building production apps for clients.", dot: "bg-background border-violet-500", inner: "bg-violet-500" },
+              { year: "2022", title: "Got into competitive programming", desc: "Joined the university team and fell in love with algorithms.", dot: "bg-background border-blue-500", inner: "bg-blue-500" },
+              { year: "2021", title: "Started university", desc: "Enrolled in Informatics Engineering. Switched from hobbyist to serious developer.", dot: "bg-background border-teal-500", inner: "bg-teal-500" },
+              { year: "2018", title: "First line of code", desc: "Built my first website at 14 — a fan site with Comic Sans and neon colors.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+            ].map(({ year, title, desc, dot, inner }) => (
+              <div key={year} className="relative flex gap-6 pl-10">
+                <div className={`absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 shadow-sm ${dot}`}>
+                  <span className={`w-2 h-2 rounded-full ${inner}`} />
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-muted-foreground">{year}</span>
+                  <h3 className="text-sm font-semibold mt-0.5">{title}</h3>
+                  <p className="text-sm text-muted-foreground mt-0.5">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
