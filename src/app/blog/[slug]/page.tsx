@@ -5,12 +5,14 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm";
 import { publishedPosts } from "@/data/blog";
 import { getBlogContent } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MdxPre } from "@/components/shared/mdx-pre";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const mdxOptions = {
   mdxOptions: {
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [
       [
         rehypePrettyCode,
@@ -44,6 +47,15 @@ const mdxOptions = {
 };
 
 const mdxComponents = {
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2 className="flex items-center gap-0 mt-12 mb-4 border-l-4 border-blue-500 pl-4 text-2xl font-bold tracking-tight text-foreground" {...props} />
+  ),
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h3 className="text-lg font-bold tracking-tight text-foreground mt-8 mb-3" {...props} />
+  ),
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h4 className="text-base font-semibold text-foreground/80 mt-6 mb-2" {...props} />
+  ),
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <span className="block relative w-full aspect-video my-8 rounded-xl overflow-hidden">
       <Image
@@ -56,10 +68,17 @@ const mdxComponents = {
     </span>
   ),
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-6">
-      <table {...props} />
+    <div className="overflow-x-auto my-6 rounded-xl border border-border">
+      <table className="w-full text-sm" {...props} />
     </div>
   ),
+  th: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <th className="bg-muted/60 px-4 py-2.5 text-left text-xs font-semibold text-foreground/80 first:rounded-tl-xl last:rounded-tr-xl" {...props} />
+  ),
+  td: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <td className="border-t border-border px-4 py-2.5 text-foreground/70" {...props} />
+  ),
+  pre: MdxPre,
 };
 
 export default async function BlogPostPage({ params }: Props) {
@@ -116,13 +135,9 @@ export default async function BlogPostPage({ params }: Props) {
         )}
 
         <div className="prose prose-zinc dark:prose-invert max-w-none
-          prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
-          prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
           prose-p:text-foreground/75 prose-p:leading-relaxed
           prose-a:text-foreground prose-a:underline-offset-4 hover:prose-a:text-foreground/70
           prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
-          prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none
           prose-blockquote:border-l-foreground/20 prose-blockquote:text-foreground/60
           prose-li:text-foreground/75
           prose-table:text-sm prose-th:text-foreground prose-td:text-foreground/70
