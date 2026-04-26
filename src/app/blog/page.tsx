@@ -2,12 +2,21 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ArrowRight, Clock } from "lucide-react";
+import Image from "next/image";
+import { Search, Calendar, ArrowRight } from "lucide-react";
 import { publishedPosts } from "@/data/blog";
+
+const cardGradients = [
+  "from-blue-500/8 via-card to-card border-l-blue-500/50",
+  "from-violet-500/8 via-card to-card border-l-violet-500/50",
+  "from-emerald-500/8 via-card to-card border-l-emerald-500/50",
+  "from-amber-500/8 via-card to-card border-l-amber-500/50",
+  "from-rose-500/8 via-card to-card border-l-rose-500/50",
+  "from-cyan-500/8 via-card to-card border-l-cyan-500/50",
+];
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const allTags = Array.from(new Set(publishedPosts.flatMap((p) => p.tags))).sort();
@@ -30,7 +39,7 @@ export default function BlogPage() {
   return (
     <Container className="pt-28 pb-20">
       <h1 className="text-3xl font-bold tracking-tight mb-2">Blog</h1>
-      <p className="text-muted-foreground text-sm mb-8">
+      <p className="text-foreground/60 text-sm mb-8">
         Thoughts on development, tools, architecture, and craft.
       </p>
 
@@ -65,35 +74,55 @@ export default function BlogPage() {
 
       {/* Posts */}
       {filtered.length > 0 ? (
-        <div className="flex flex-col divide-y divide-border">
-          {filtered.map((post) => (
-            <article key={post.id} className="py-6 first:pt-0 last:pb-0 group">
-              <Link href={`/blog/${post.slug}`} className="block">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <h2 className="font-semibold text-base leading-snug group-hover:text-foreground/70 transition-colors">
+        <div className="flex flex-col gap-3">
+          {filtered.map((post, i) => (
+            <article key={post.id}>
+              <Link href={`/blog/${post.slug}`} className={`group flex gap-5 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length]} hover:shadow-sm transition-all duration-200 p-4 overflow-hidden`}>
+                {/* Thumbnail */}
+                <div className="relative w-36 sm:w-48 aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
+                  {post.coverImage ? (
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="192px"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-muted/40">
+                      <span className="text-3xl font-bold text-muted-foreground/20 select-none">
+                        {post.title.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Text */}
+                <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      {post.tags.map((tag) => (
+                        <span key={tag} className="rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/70">
+                          {tag}
+                        </span>
+                      ))}
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <span className="text-muted-foreground/40">•</span>
+                        <Calendar className="h-3 w-3" />
+                        {formatDate(post.date)}
+                      </span>
+                    </div>
+                    <h2 className="font-semibold text-base leading-snug mb-2 group-hover:text-foreground/75 transition-colors line-clamp-2">
                       {post.title}
                     </h2>
-                    <p className="text-sm text-muted-foreground mt-2 leading-relaxed line-clamp-2">
+                    <p className="text-sm text-foreground/55 leading-relaxed line-clamp-2">
                       {post.excerpt}
                     </p>
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {post.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs font-normal">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
                   </div>
-
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground shrink-0">
-                    <span>{formatDate(post.date)}</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {post.readTime} min
-                    </span>
-                    <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                    Read article
+                    <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                  </span>
                 </div>
               </Link>
             </article>

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { publishedPosts } from "@/data/blog";
+import { getBlogContent } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
@@ -21,14 +24,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: post.coverImage ? { images: [post.coverImage] } : undefined,
   };
 }
+
+const mdxComponents = {
+  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <span className="block relative w-full aspect-video my-8 rounded-xl overflow-hidden">
+      <Image
+        src={typeof props.src === "string" ? props.src : ""}
+        alt={props.alt ?? ""}
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, 672px"
+      />
+    </span>
+  ),
+  table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+    <div className="overflow-x-auto my-6">
+      <table {...props} />
+    </div>
+  ),
+};
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = publishedPosts.find((p) => p.slug === slug);
-
   if (!post) notFound();
+
+  const mdxData = getBlogContent(slug);
 
   return (
     <Container className="pt-28 pb-20 max-w-2xl">
@@ -63,13 +87,41 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </header>
 
-        {/* Content placeholder — replace with MDX or CMS content */}
-        <div className="prose prose-zinc dark:prose-invert prose-sm max-w-none">
-          <p className="lead">{post.excerpt}</p>
-          <div className="mt-6 rounded-xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground text-sm">
-            <p>Full article content coming soon.</p>
-            <p className="mt-1 text-xs">Connect an MDX or CMS source to this page.</p>
+        {post.coverImage && (
+          <div className="relative w-full aspect-video mb-10 rounded-xl overflow-hidden border border-border">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
           </div>
+        )}
+
+        <div className="prose prose-zinc dark:prose-invert max-w-none
+          prose-headings:font-semibold prose-headings:tracking-tight
+          prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
+          prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+          prose-p:text-foreground/75 prose-p:leading-relaxed
+          prose-a:text-foreground prose-a:underline-offset-4 hover:prose-a:text-foreground/70
+          prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
+          prose-pre:bg-muted/60 prose-pre:border prose-pre:border-border prose-pre:rounded-xl
+          prose-blockquote:border-l-foreground/20 prose-blockquote:text-foreground/60
+          prose-li:text-foreground/75
+          prose-table:text-sm prose-th:text-foreground prose-td:text-foreground/70
+          prose-img:rounded-xl prose-img:border prose-img:border-border">
+          {mdxData ? (
+            <MDXRemote source={mdxData.content} components={mdxComponents} />
+          ) : (
+            <>
+              <p className="lead">{post.excerpt}</p>
+              <div className="mt-6 rounded-xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground text-sm not-prose">
+                <p>Full article content coming soon.</p>
+              </div>
+            </>
+          )}
         </div>
       </article>
     </Container>

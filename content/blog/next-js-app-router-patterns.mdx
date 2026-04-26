@@ -1,0 +1,151 @@
+After building several production apps on the Next.js App Router, I've settled on a set of patterns that I reach for every time. These aren't framework opinions — they're solutions to problems I kept hitting.
+
+## Folder Structure
+
+The layout I use consistently:
+
+```
+src/
+  app/              # Routes only — no components
+  components/
+    layout/         # Navbar, Footer, Container
+    sections/       # Page-level sections (Hero, etc.)
+    shared/         # Reusable across sections
+    ui/             # Base design system (Button, Badge, etc.)
+  data/             # Static data, types, constants
+  lib/              # Pure utilities (no React)
+  hooks/            # Custom React hooks
+  types/            # Shared TypeScript types
+```
+
+The key rule: **`app/` is for routing only**. No business logic, no big components. Pages are thin wrappers that import from `components/`.
+
+## Server vs Client Components
+
+Default to Server Components. Add `"use client"` only when you need:
+
+- `useState` / `useReducer`
+- `useEffect`
+- Browser APIs (`window`, `document`)
+- Event handlers
+
+A pattern I use often: **keep the page Server, push interactivity down**:
+
+```tsx
+// app/blog/page.tsx — Server Component
+import { BlogList } from "@/components/sections/blog-list";
+import { getPosts } from "@/lib/posts";
+
+export default async function BlogPage() {
+  const posts = await getPosts(); // server-side fetch
+  return <BlogList posts={posts} />;
+}
+```
+
+```tsx
+// components/sections/blog-list.tsx — Client Component
+"use client";
+import { useState } from "react";
+
+export function BlogList({ posts }) {
+  const [search, setSearch] = useState("");
+  // ...filtering logic
+}
+```
+
+The data fetching is free (no client-side loading state), and only the interactive parts opt into the client bundle.
+
+![Next.js App Router diagram](https://picsum.photos/seed/nextjs-diagram/1200/500)
+
+## Data Fetching Patterns
+
+### Server Components
+
+Fetch directly in the component — no `useEffect`, no loading state:
+
+```tsx
+async function ProductPage({ params }) {
+  const product = await db.product.findUnique({
+    where: { id: params.id }
+  });
+  return <ProductDetail product={product} />;
+}
+```
+
+### Parallel Fetching
+
+Avoid waterfalls with `Promise.all`:
+
+```tsx
+// Bad — sequential (waterfall)
+const user = await getUser(id);
+const posts = await getPosts(user.id);
+
+// Good — parallel
+const [user, posts] = await Promise.all([
+  getUser(id),
+  getPosts(id),
+]);
+```
+
+### Route Handlers for Client Mutations
+
+For mutations triggered from Client Components, use Route Handlers:
+
+```ts
+// app/api/contact/route.ts
+export async function POST(req: Request) {
+  const body = await req.json();
+  await sendEmail(body);
+  return Response.json({ ok: true });
+}
+```
+
+## Metadata
+
+Always use the `generateMetadata` function for dynamic pages:
+
+```tsx
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPost(params.slug);
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      images: [post.coverImage],
+    },
+  };
+}
+```
+
+## Error and Loading States
+
+Use the file-based convention instead of conditional rendering:
+
+```
+app/
+  blog/
+    page.tsx        # The actual page
+    loading.tsx     # Skeleton shown during Suspense
+    error.tsx       # Error boundary
+    not-found.tsx   # 404 for this route
+```
+
+This keeps each file focused on one concern.
+
+## Type-Safe Route Params
+
+Next.js 15 made `params` a Promise — always `await` them:
+
+```tsx
+type Props = { params: Promise<{ slug: string }> };
+
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  // ...
+}
+```
+
+## Wrapping Up
+
+None of these patterns are groundbreaking — they're just consistent. The App Router rewards consistency more than cleverness. Pick a structure, stick to it, and your codebase stays navigable as it grows.

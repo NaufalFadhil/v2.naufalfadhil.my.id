@@ -1,0 +1,138 @@
+Go is one of the best languages for building CLI tools. The standard library is solid, binaries are self-contained, and the ecosystem around CLI tooling — particularly [Cobra](https://github.com/spf13/cobra) — is mature and well-documented.
+
+In this post I'll walk through building a production-ready CLI tool from scratch: flags, subcommands, config files, and error handling.
+
+## Why Go for CLIs?
+
+A few reasons I keep reaching for Go when building command-line tools:
+
+- **Single binary** — no runtime, no dependencies to install on the target machine
+- **Fast startup** — critical for tools invoked frequently in scripts
+- **Cross-compilation** — `GOOS=linux GOARCH=amd64 go build` just works
+- **Strong stdlib** — `flag`, `os`, `io`, `bufio` cover 80% of CLI needs
+
+## Setting Up with Cobra
+
+Cobra is the standard library for complex CLIs in Go. It powers `kubectl`, `gh`, `hugo`, and many others.
+
+```bash
+go mod init mycli
+go get github.com/spf13/cobra@latest
+```
+
+The basic structure of a Cobra app:
+
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+
+    "github.com/spf13/cobra"
+)
+
+var rootCmd = &cobra.Command{
+    Use:   "mycli",
+    Short: "A brief description of your CLI",
+    Run: func(cmd *cobra.Command, args []string) {
+        fmt.Println("Hello from mycli!")
+    },
+}
+
+func main() {
+    if err := rootCmd.Execute(); err != nil {
+        fmt.Fprintln(os.Stderr, err)
+        os.Exit(1)
+    }
+}
+```
+
+## Adding Subcommands
+
+The real power of Cobra is subcommands. Here's how you add a `serve` subcommand:
+
+```go
+var serveCmd = &cobra.Command{
+    Use:   "serve",
+    Short: "Start the HTTP server",
+    RunE: func(cmd *cobra.Command, args []string) error {
+        port, _ := cmd.Flags().GetInt("port")
+        return startServer(port)
+    },
+}
+
+func init() {
+    serveCmd.Flags().IntP("port", "p", 8080, "Port to listen on")
+    rootCmd.AddCommand(serveCmd)
+}
+```
+
+Note: always use `RunE` instead of `Run` so errors propagate correctly.
+
+![Terminal showing mycli help output](https://picsum.photos/seed/go-terminal/1200/500)
+
+## Persistent Flags vs Local Flags
+
+Cobra has two types of flags:
+
+| Type | Scope | Declaration |
+|------|-------|-------------|
+| Persistent | Root + all subcommands | `rootCmd.PersistentFlags()` |
+| Local | Only the command itself | `cmd.Flags()` |
+
+Use persistent flags for things like `--verbose`, `--config`, `--output-format`. Use local flags for command-specific options.
+
+## Config Files with Viper
+
+For anything beyond basic flags, pair Cobra with [Viper](https://github.com/spf13/viper):
+
+```go
+import "github.com/spf13/viper"
+
+func initConfig() {
+    viper.SetConfigName(".mycli")
+    viper.SetConfigType("yaml")
+    viper.AddConfigPath("$HOME")
+    viper.AddConfigPath(".")
+    viper.AutomaticEnv() // read from env vars too
+
+    if err := viper.ReadInConfig(); err == nil {
+        fmt.Println("Using config:", viper.ConfigFileUsed())
+    }
+}
+```
+
+This lets users configure defaults in `~/.mycli.yaml` without passing flags every time.
+
+## Error Handling
+
+One pattern I use everywhere: a typed `CLIError` that knows whether to print usage:
+
+```go
+type CLIError struct {
+    msg      string
+    showHelp bool
+}
+
+func (e *CLIError) Error() string { return e.msg }
+
+// In RunE:
+if len(args) == 0 {
+    return &CLIError{msg: "at least one argument required", showHelp: true}
+}
+```
+
+## Distribution
+
+Once the binary builds, you have options:
+
+- **GitHub Releases** — tag a release, upload binaries with `goreleaser`
+- **Homebrew** — write a formula that downloads the binary
+- **Install script** — `curl | sh` pattern for quick installs
+
+[GoReleaser](https://goreleaser.com/) automates all of this: cross-compilation, checksums, GitHub releases, Homebrew taps — all from a single `.goreleaser.yaml`.
+
+## Wrapping Up
+
+Cobra + Viper + GoReleaser is a solid stack for production CLIs. Start simple, add subcommands as the tool grows, and let GoReleaser handle distribution.

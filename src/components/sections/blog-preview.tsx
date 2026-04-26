@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { latestPosts } from "@/data/blog";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+
+const cardGradients = [
+  "from-blue-500/8 via-card to-card border-l-blue-500/50",
+  "from-violet-500/8 via-card to-card border-l-violet-500/50",
+  "from-emerald-500/8 via-card to-card border-l-emerald-500/50",
+  "from-amber-500/8 via-card to-card border-l-amber-500/50",
+];
 
 export function BlogPreview() {
   return (
@@ -26,41 +33,64 @@ export function BlogPreview() {
         </Button>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {latestPosts.map((post, i) => (
           <motion.article
             key={post.id}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
+            transition={{ duration: 0.35, delay: i * 0.07, ease: "easeOut" }}
           >
             <Link
               href={`/blog/${post.slug}`}
-              className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-border bg-card hover:bg-gradient-to-r hover:from-muted/40 hover:to-card p-4 transition-all duration-200 hover:shadow-sm"
+              className={`group flex gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length]} hover:shadow-sm transition-all duration-200 p-4 overflow-hidden`}
             >
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-base leading-snug group-hover:text-foreground/80 transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-sm text-foreground/60 mt-1 line-clamp-1 leading-relaxed">
-                  {post.excerpt}
-                </p>
-                <div className="flex flex-wrap items-center gap-2 mt-2">
-                  {post.tags.slice(0, 2).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs font-normal">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+              {/* Thumbnail */}
+              <div className="relative w-28 sm:w-36 aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
+                {post.coverImage ? (
+                  <Image
+                    src={post.coverImage}
+                    alt={post.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="144px"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-muted/40">
+                    <span className="text-2xl font-bold text-muted-foreground/20 select-none">
+                      {post.title.charAt(0)}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-3 text-xs text-muted-foreground shrink-0">
-                <span>{formatDate(post.date)}</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {post.readTime} min
+
+              {/* Text */}
+              <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    {post.tags.slice(0, 2).map((tag) => (
+                      <span key={tag} className="rounded-full border border-border bg-background/60 px-2.5 py-0.5 text-xs text-foreground/70">
+                        {tag}
+                      </span>
+                    ))}
+                    <span className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="text-muted-foreground/40">•</span>
+                      <Calendar className="h-3 w-3" />
+                      {formatDate(post.date)}
+                    </span>
+                  </div>
+                  <h3 className="font-semibold text-base leading-snug mb-1.5 group-hover:text-foreground/75 transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-foreground/55 leading-relaxed line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </div>
+                <span className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                  Read article
+                  <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
               </div>
             </Link>
           </motion.article>
