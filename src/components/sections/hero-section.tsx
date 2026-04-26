@@ -59,19 +59,23 @@ export function HeroSection() {
 
         {/* Name & Title */}
         <motion.div variants={itemVariants}>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-medium text-muted-foreground bg-muted rounded-full px-3 py-1">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+              </span>
               Available for work
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             {siteConfig.name}
           </h1>
-          <p className="text-muted-foreground mt-1 text-lg">
+          <p className="text-foreground/60 mt-1.5 text-lg">
             Software Engineer{" "}
-            <span className="text-foreground/40">·</span>{" "}
+            <span className="text-foreground/30">·</span>{" "}
             Builder{" "}
-            <span className="text-foreground/40">·</span>{" "}
+            <span className="text-foreground/30">·</span>{" "}
             Alien
           </p>
         </motion.div>
@@ -79,7 +83,7 @@ export function HeroSection() {
         {/* Bio */}
         <motion.p
           variants={itemVariants}
-          className="text-muted-foreground leading-relaxed max-w-xl text-base"
+          className="text-foreground/65 leading-relaxed max-w-xl text-base"
         >
           I'm a backend engineer who helps turn complex business requirements into reliable, working systems.
           I focus on delivering clean, efficient solutions that are easy to maintain and scale. 
