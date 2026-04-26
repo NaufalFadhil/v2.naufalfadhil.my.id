@@ -36,7 +36,7 @@ export function Footer() {
               naufal<span className="text-muted-foreground">.dev</span>
             </Link>
             <p className="text-xs text-muted-foreground mt-1">
-              Developer · Student · Alien
+              Software Engineer · Builder · Alien
             </p>
           </div>
 

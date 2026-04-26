@@ -86,3 +86,49 @@
     animation-play-state: paused;
   }
 }
+
+/* rehype-pretty-code code block styling */
+[data-rehype-pretty-code-figure] {
+  margin: 1.5rem 0;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+  padding: 1.25rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+[data-rehype-pretty-code-figure] code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: inherit;
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Language label on top of code block */
+[data-rehype-pretty-code-title] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  border-bottom: none;
+  border-radius: 0.75rem 0.75rem 0 0;
+  background: hsl(var(--muted));
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-family: var(--font-geist-mono), monospace;
+  color: hsl(var(--muted-foreground));
+}
+
+[data-rehype-pretty-code-title] + pre {
+  border-radius: 0 0 0.75rem 0.75rem;
+}

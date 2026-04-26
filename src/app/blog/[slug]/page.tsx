@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
 import { publishedPosts } from "@/data/blog";
 import { getBlogContent } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
@@ -27,6 +28,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: post.coverImage ? { images: [post.coverImage] } : undefined,
   };
 }
+
+const mdxOptions = {
+  mdxOptions: {
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark-dimmed",
+          keepBackground: true,
+        },
+      ],
+    ] as never[],
+  },
+};
 
 const mdxComponents = {
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
@@ -106,14 +121,14 @@ export default async function BlogPostPage({ params }: Props) {
           prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
           prose-p:text-foreground/75 prose-p:leading-relaxed
           prose-a:text-foreground prose-a:underline-offset-4 hover:prose-a:text-foreground/70
-          prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-          prose-pre:bg-muted/60 prose-pre:border prose-pre:border-border prose-pre:rounded-xl
+          prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+          prose-pre:p-0 prose-pre:bg-transparent prose-pre:border-none
           prose-blockquote:border-l-foreground/20 prose-blockquote:text-foreground/60
           prose-li:text-foreground/75
           prose-table:text-sm prose-th:text-foreground prose-td:text-foreground/70
           prose-img:rounded-xl prose-img:border prose-img:border-border">
           {mdxData ? (
-            <MDXRemote source={mdxData.content} components={mdxComponents} />
+            <MDXRemote source={mdxData.content} components={mdxComponents} options={mdxOptions} />
           ) : (
             <>
               <p className="lead">{post.excerpt}</p>
