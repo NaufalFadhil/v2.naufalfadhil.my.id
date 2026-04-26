@@ -47,8 +47,14 @@ const mdxOptions = {
 };
 
 const mdxComponents = {
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="flex items-center gap-0 mt-12 mb-4 border-l-4 border-blue-500 pl-4 text-2xl font-bold tracking-tight text-foreground" {...props} />
+  h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2 className="flex items-center gap-3 mt-12 mb-5 text-2xl font-bold tracking-tight text-foreground" {...props}>
+      <span
+        className="shrink-0 w-4 h-7 bg-indigo-500"
+        style={{ clipPath: "polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%)" }}
+      />
+      {children}
+    </h2>
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 className="text-lg font-bold tracking-tight text-foreground mt-8 mb-3" {...props} />
@@ -134,7 +140,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         )}
 
-        <div className="prose prose-zinc dark:prose-invert max-w-none
+        <div className="prose prose-zinc dark:prose-invert max-w-none font-lora
           prose-p:text-foreground/75 prose-p:leading-relaxed
           prose-a:text-foreground prose-a:underline-offset-4 hover:prose-a:text-foreground/70
           prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
