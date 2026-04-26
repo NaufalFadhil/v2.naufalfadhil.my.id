@@ -33,7 +33,7 @@ export function Footer() {
               href="/"
               className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity"
             >
-              naufalfadhil<span className="text-muted-foreground">.my.id</span>
+              <span className="text-muted-foreground">Naufal Fadhil</span> Athallah
             </Link>
             <p className="text-xs text-muted-foreground mt-1">
               Software Engineer · Builder · Alien

@@ -1,0 +1,170 @@
+Docker changed how I develop. Before it, "works on my machine" was a real problem. After it, environments are reproducible, onboarding takes minutes instead of days, and production is closer to dev than ever.
+
+Here's everything I wish I knew when starting out.
+
+## The Core Idea
+
+Docker packages your application + its dependencies + its runtime into a single **image**. That image runs identically on any machine with Docker installed.
+
+Three things to know:
+- **Image** — a snapshot of your app + environment (like a class)
+- **Container** — a running instance of an image (like an object)
+- **Registry** — where images are stored (Docker Hub, GHCR, ECR)
+
+## Your First Dockerfile
+
+```dockerfile
+# Start from an official base image
+FROM node:20-alpine
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy dependency files first (layer caching)
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy the rest of the app
+COPY . .
+
+# Build
+RUN npm run build
+
+# Expose the port
+EXPOSE 3000
+
+# Start the app
+CMD ["node", "server.js"]
+```
+
+The order matters for **layer caching** — Docker caches each `RUN`/`COPY` step. By copying `package.json` before the source code, the `npm ci` layer is only re-run when dependencies change, not on every code change.
+
+![Docker layer caching diagram](https://picsum.photos/seed/docker-layers/1200/500)
+
+## Docker Compose for Local Dev
+
+For anything with multiple services (app + database + cache), use Compose:
+
+```yaml
+# docker-compose.yml
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/myapp
+      REDIS_URL: redis://cache:6379
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/app          # mount source code for hot reload
+      - /app/node_modules  # keep container's node_modules
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: myapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  cache:
+    image: redis:7-alpine
+
+volumes:
+  postgres_data:
+```
+
+Start everything with one command:
+
+```bash
+docker compose up -d
+docker compose logs -f app  # follow logs
+docker compose down          # stop everything
+```
+
+## Volumes: Don't Lose Your Data
+
+Containers are ephemeral — when they stop, their filesystem is gone. Use **named volumes** for data that should persist:
+
+```yaml
+volumes:
+  - postgres_data:/var/lib/postgresql/data  # named volume (persists)
+  - .:/app                                   # bind mount (syncs with host)
+```
+
+Named volumes are managed by Docker and survive `docker compose down`. Bind mounts sync a host directory into the container — great for hot reload in dev.
+
+## Multi-Stage Builds for Production
+
+Reduce your production image size dramatically:
+
+```dockerfile
+# Stage 1: build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: run (no dev deps, no source code)
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/public ./public
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+A Next.js app might go from 1.2GB to under 200MB with this pattern.
+
+## Useful Commands
+
+```bash
+# Build an image
+docker build -t myapp:latest .
+
+# Run a container
+docker run -p 3000:3000 --env-file .env myapp:latest
+
+# Shell into a running container
+docker exec -it <container-id> sh
+
+# Check logs
+docker logs -f <container-id>
+
+# Remove stopped containers + dangling images
+docker system prune
+
+# See what's running
+docker ps
+```
+
+## .dockerignore
+
+Always add a `.dockerignore` to avoid copying junk into your image:
+
+```
+node_modules
+.next
+.git
+*.log
+.env
+.env.local
+README.md
+```
+
+## Production Considerations
+
+A few things that matter in production but not local dev:
+
+1. **Never run as root** — add `USER node` before `CMD`
+2. **Health checks** — `HEALTHCHECK CMD curl -f http://localhost:3000/health || exit 1`
+3. **Read-only filesystems** — `docker run --read-only` where possible
+4. **Resource limits** — `--memory 512m --cpus 0.5`
+5. **Secrets** — use Docker secrets or environment injection, never bake into the image
+
+The Dockerfile for dev and prod can be the same file — just use multi-stage builds and target the right stage.

@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-07-05",
     readTime: 15,
     tags: ["Docker", "DevOps"],
-    published: true,
+    published: false,
   },
 ];
 

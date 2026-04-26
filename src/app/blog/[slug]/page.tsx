@@ -54,7 +54,7 @@ const mdxComponents = {
   h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
     const id = slugifyHeading(getChildrenText(children));
     return (
-      <h2 id={id} className="flex items-center gap-3 mt-12 mb-5 text-2xl font-bold tracking-tight text-foreground" {...props}>
+      <h2 id={id} className="flex items-center gap-3 mt-12 mb-5 text-2xl font-bold tracking-tight text-foreground scroll-mt-28" {...props}>
         <span
           className="shrink-0 w-4 h-7 bg-indigo-500"
           style={{ clipPath: "polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%)" }}
@@ -66,7 +66,7 @@ const mdxComponents = {
   h3: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
     const id = slugifyHeading(getChildrenText(children));
     return (
-      <h3 id={id} className="text-lg font-bold tracking-tight text-foreground mt-8 mb-3" {...props}>
+      <h3 id={id} className="text-lg font-bold tracking-tight text-foreground mt-8 mb-3 scroll-mt-28" {...props}>
         {children}
       </h3>
     );
