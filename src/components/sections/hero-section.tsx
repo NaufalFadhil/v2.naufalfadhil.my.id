@@ -81,8 +81,9 @@ export function HeroSection() {
           variants={itemVariants}
           className="text-muted-foreground leading-relaxed max-w-xl text-base"
         >
-          I'm a backend-focused engineer who genuinely enjoys the process of building things
-          — taking messy, complex problems and turning them into clean, working software. I work with PHP, Java, JavaScript, Go, and Rust, and I'm always excited to learn what's next.
+          I'm a backend engineer who helps turn complex business requirements into reliable, working systems.
+          I focus on delivering clean, efficient solutions that are easy to maintain and scale. 
+          I've worked with PHP, Java, JavaScript, Go, and Rust, and I adapt quickly to different project needs and environments.
         </motion.p>
 
         {/* CTA Buttons */}

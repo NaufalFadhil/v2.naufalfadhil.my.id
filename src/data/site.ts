@@ -5,15 +5,15 @@ export const siteConfig = {
     "Personal portfolio of Naufal Fadhil — a developer, student, and alien who builds things for the web.",
   url: "https://naufalfadhil.my.id",
   ogImage: "https://naufalfadhil.my.id/og.png",
-  email: "hello@naufalfadhil.my.id",
+  email: "athallah@stashidea.com",
   location: "Indonesia",
   avatar: "/avatar.jpg",
-  resume: "/resume.pdf",
+  resume: "/resume_naufalfadhil.pdf",
   social: {
     github: "https://github.com/naufalfadhil",
-    twitter: "https://twitter.com/naufalfadhil",
+    twitter: "https://twitter.com/nf_athallah",
     linkedin: "https://linkedin.com/in/naufalfadhil",
-    instagram: "https://instagram.com/naufalfadhil",
+    instagram: "https://instagram.com/nf_athallah",
   },
 };
 
