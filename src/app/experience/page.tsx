@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import { Briefcase, MapPin } from "lucide-react";
+
+function renderBold(text: string) {
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i} className="font-semibold text-foreground">{part}</strong> : part
+  );
+}
 import { experiences } from "@/data/experience";
 import { formatDate, calculateDuration } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 
 const typeStyle: Record<string, { dot: string; icon: string; profile: string }> = {
-  "Full-time":  { dot: "bg-background border-indigo-500",  icon: "text-indigo-500",  profile: "border-l-indigo-500  bg-indigo-500/5  text-indigo-300/80" },
-  "Part-time":  { dot: "bg-background border-violet-500",  icon: "text-violet-500",  profile: "border-l-violet-500  bg-violet-500/5  text-violet-300/80" },
-  "Internship": { dot: "bg-background border-amber-500",   icon: "text-amber-500",   profile: "border-l-amber-500   bg-amber-500/5   text-amber-300/80"  },
-  "Freelance":  { dot: "bg-background border-emerald-500", icon: "text-emerald-500", profile: "border-l-emerald-500 bg-emerald-500/5 text-emerald-300/80" },
-  "Contract":   { dot: "bg-background border-orange-500",  icon: "text-orange-500",  profile: "border-l-orange-500  bg-orange-500/5  text-orange-300/80" },
+  "Full-time":  { dot: "bg-background border-indigo-500",  icon: "text-indigo-500",  profile: "border-l-indigo-500  bg-indigo-500/5  text-indigo-700  dark:text-indigo-300" },
+  "Part-time":  { dot: "bg-background border-violet-500",  icon: "text-violet-500",  profile: "border-l-violet-500  bg-violet-500/5  text-violet-700  dark:text-violet-300" },
+  "Internship": { dot: "bg-background border-amber-500",   icon: "text-amber-500",   profile: "border-l-amber-500   bg-amber-500/5   text-amber-700   dark:text-amber-300"  },
+  "Freelance":  { dot: "bg-background border-emerald-500", icon: "text-emerald-500", profile: "border-l-emerald-500 bg-emerald-500/5 text-emerald-700 dark:text-emerald-300" },
+  "Contract":   { dot: "bg-background border-orange-500",  icon: "text-orange-500",  profile: "border-l-orange-500  bg-orange-500/5  text-orange-700  dark:text-orange-300" },
 };
 
 export const metadata: Metadata = {
@@ -72,7 +79,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {exp.companyProfile && (
-                  <p className={`text-sm leading-relaxed mt-3 mb-2 border-l-2 pl-3 py-2 rounded-r-lg italic ${style.profile}`}>
+                  <p className={`text-sm leading-relaxed mt-3 mb-2 border-l-2 pl-3 py-2 rounded-r-lg ${style.profile}`}>
                     {exp.companyProfile}
                   </p>
                 )}
@@ -81,7 +88,7 @@ export default function ExperiencePage() {
                   {exp.description.map((item, j) => (
                     <li key={j} className="flex gap-2 text-sm text-muted-foreground">
                       <span className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground/50 shrink-0" aria-hidden />
-                      {item}
+                      {renderBold(item)}
                     </li>
                   ))}
                 </ul>
