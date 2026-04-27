@@ -50,7 +50,7 @@ export function ExperienceTimeline() {
       />
 
       <div className="flex flex-col gap-4">
-        {experiences.map((exp, i) => {
+        {experiences.slice(0, 3).map((exp, i) => {
           const style = typeStyle[exp.type];
           const isPresent = !exp.end;
 
