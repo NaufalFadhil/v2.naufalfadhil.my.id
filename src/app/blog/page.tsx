@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, Calendar, ArrowRight } from "lucide-react";
-import { publishedPosts, categoryStyle } from "@/data/blog";
+import { publishedPosts, categoryStyle, type BlogCategory } from "@/data/blog";
 
 const cardGradients = [
   { base: "from-blue-500/8 via-card to-card border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
@@ -20,21 +20,29 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const allTags = Array.from(new Set(publishedPosts.flatMap((p) => p.tags))).sort();
+const allCategories = Array.from(new Set(publishedPosts.map((p) => p.category))) as BlogCategory[];
 
 export default function BlogPage() {
+  const PAGE_SIZE = 10;
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<BlogCategory | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filtered = useMemo(() => {
+    setVisibleCount(PAGE_SIZE);
     return publishedPosts.filter((p) => {
       const matchesSearch =
         !search ||
         p.title.toLowerCase().includes(search.toLowerCase()) ||
         p.excerpt.toLowerCase().includes(search.toLowerCase());
       const matchesTag = !activeTag || p.tags.includes(activeTag);
-      return matchesSearch && matchesTag;
+      const matchesCategory = !activeCategory || p.category === activeCategory;
+      return matchesSearch && matchesTag && matchesCategory;
     });
-  }, [search, activeTag]);
+  }, [search, activeTag, activeCategory]);
+
+  const visible = filtered.slice(0, visibleCount);
 
   return (
     <Container className="pt-28 pb-20">
@@ -52,6 +60,26 @@ export default function BlogPage() {
           onChange={(e) => setSearch(e.target.value)}
           className="pl-9"
         />
+      </div>
+
+      {/* Category filter */}
+      <div className="flex flex-wrap gap-2 mb-3">
+        {allCategories.map((cat) => {
+          const style = categoryStyle[cat];
+          const isActive = activeCategory === cat;
+          return (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(isActive ? null : cat)}
+              className={cn(
+                "rounded-full border px-3 py-1 text-xs font-semibold transition-all",
+                isActive ? style.className + " ring-1 ring-offset-1" : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
+              )}
+            >
+              {style.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Tag filter */}
@@ -75,7 +103,7 @@ export default function BlogPage() {
       {/* Posts */}
       {filtered.length > 0 ? (
         <div className="flex flex-col gap-3">
-          {filtered.map((post, i) => (
+          {visible.map((post, i) => (
             <article key={post.id}>
               <Link href={`/blog/${post.slug}`} className={`group flex gap-5 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length].base} shadow-sm transition-all duration-300 hover:shadow-md ${cardGradients[i % cardGradients.length].hover} p-4 overflow-hidden`}>
                 {/* Thumbnail */}
@@ -130,12 +158,20 @@ export default function BlogPage() {
               </Link>
             </article>
           ))}
+          {visibleCount < filtered.length && (
+            <button
+              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+              className="mt-4 w-full rounded-xl border border-border py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+            >
+              Load more ({filtered.length - visibleCount} remaining)
+            </button>
+          )}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <p className="text-muted-foreground text-sm">No posts match your search.</p>
           <button
-            onClick={() => { setSearch(""); setActiveTag(null); }}
+            onClick={() => { setSearch(""); setActiveTag(null); setActiveCategory(null); }}
             className="mt-3 text-xs text-foreground underline"
           >
             Clear filters
