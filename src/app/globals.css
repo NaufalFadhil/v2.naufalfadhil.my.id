@@ -132,21 +132,45 @@
   border-radius: 0.25rem;
 }
 
-/* Language label on top of code block */
+/* File title label on top of code block */
 [data-rehype-pretty-code-title] {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid hsl(var(--border));
+  gap: 0.75rem;
+  border: 1px solid #444c56;
   border-bottom: none;
   border-radius: 0.75rem 0.75rem 0 0;
-  background: hsl(var(--muted));
+  background: #2d333b;
   padding: 0.5rem 1rem;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-family: var(--font-geist-mono), monospace;
-  color: hsl(var(--muted-foreground));
+  color: #768390;
 }
 
+[data-rehype-pretty-code-title]::before {
+  content: "";
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: #ff5f57;
+  box-shadow: 1rem 0 0 #ffbd2e, 2rem 0 0 #28c840;
+  margin-right: 2rem;
+  flex-shrink: 0;
+}
+
+/* MdxPre wraps pre in a div, so target div + pre inside */
+[data-rehype-pretty-code-title] + div {
+  margin-top: 0 !important;
+}
+
+[data-rehype-pretty-code-title] + div > pre {
+  border-radius: 0 0 0.75rem 0.75rem;
+  border-top: 1px solid #373e47;
+}
+
+/* Fallback for bare pre (no MdxPre wrapper) */
 [data-rehype-pretty-code-title] + pre {
   border-radius: 0 0 0.75rem 0.75rem;
+  border-top: 1px solid #373e47;
 }
