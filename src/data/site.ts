@@ -20,10 +20,10 @@ export const siteConfig = {
   description:
     "Personal portfolio of Naufal Fadhil — a developer, builder, and alien who builds things for the web.",
   url: "https://naufalfadhil.my.id",
-  ogImage: "https://naufalfadhil.my.id/og.png",
+  ogImage: "/N-Blue.svg",
   email: "athallah@stashidea.com",
   location: "Indonesia",
-  avatar: "/avatar.jpg",
+  avatar: "/avatar.png",
   resume: "https://drive.google.com/file/d/1xLuVQj1tTrs_BFEyWYBfRed-9UsihAh7/view",
   social: {
     github: "https://github.com/naufalfadhil",

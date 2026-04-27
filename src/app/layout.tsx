@@ -59,6 +59,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/N-Red.svg",
+  },
 };
 
 export default function RootLayout({
