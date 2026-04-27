@@ -155,9 +155,10 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           )}
 
-          <div className="prose prose-zinc dark:prose-invert max-w-none font-lora
+          <div className="prose prose-zinc dark:prose-invert max-w-none font-sans
             prose-p:text-foreground/75 prose-p:leading-relaxed
-            prose-a:text-foreground prose-a:underline-offset-4 hover:prose-a:text-foreground/70
+            prose-a:text-foreground prose-a:underline-offset-4 prose-a:decoration-indigo-500 hover:prose-a:decoration-indigo-400
+            prose-strong:text-indigo-500 dark:prose-strong:text-indigo-400
             prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
             prose-blockquote:border-l-foreground/20 prose-blockquote:text-foreground/60
             prose-li:text-foreground/75

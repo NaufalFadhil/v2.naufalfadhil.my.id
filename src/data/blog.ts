@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-11-15",
     readTime: 8,
     tags: ["Go", "CLI", "DevTools"],
-    published: false,
+    published: true,
   },
   {
     id: "2",
@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-10-02",
     readTime: 12,
     tags: ["Next.js", "React", "Architecture"],
-    published: false,
+    published: true,
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-08-20",
     readTime: 10,
     tags: ["PostgreSQL", "Database", "Performance"],
-    published: false,
+    published: true,
   },
   {
     id: "4",
@@ -57,7 +57,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-07-05",
     readTime: 15,
     tags: ["Docker", "DevOps"],
-    published: false,
+    published: true,
   },
 ];
 

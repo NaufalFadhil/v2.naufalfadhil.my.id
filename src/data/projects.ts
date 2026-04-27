@@ -21,7 +21,7 @@ export const projects: Project[] = [
       "A smart personal finance application powered by AI that categorizes expenses, predicts spending patterns, and provides actionable financial insights.",
     longDescription:
       "Built with Next.js and integrated with OpenAI's API, this app automatically categorizes transactions, generates monthly reports, and sends smart budget alerts. Features include multi-currency support, receipt scanning, and exportable reports.",
-    screenshot: "/projects/ai-finance.png",
+    screenshot: "https://picsum.photos/seed/ai-finance/1200/630",
     tags: ["AI", "Finance", "Full Stack"],
     tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI", "Tailwind CSS"],
     github: "https://github.com/naufalfadhil/ai-finance",
@@ -37,7 +37,7 @@ export const projects: Project[] = [
       "A command-line tool that generates database schemas, migrations, and seed data from natural language descriptions.",
     longDescription:
       "Written in Go, this CLI tool interprets plain-English schema descriptions and generates SQL migrations, ORM models (GORM, Eloquent), and realistic seed data. Supports PostgreSQL, MySQL, and SQLite.",
-    screenshot: "/projects/cli-db.png",
+    screenshot: "https://picsum.photos/seed/cli-db/1200/630",
     tags: ["CLI", "DevTools", "Go"],
     tech: ["Go", "PostgreSQL", "MySQL", "SQLite", "Cobra CLI"],
     github: "https://github.com/naufalfadhil/dbgen",
@@ -50,7 +50,7 @@ export const projects: Project[] = [
     title: "Personal AI Agent",
     description:
       "A self-hosted AI agent that manages tasks, answers questions from your personal knowledge base, and automates repetitive workflows.",
-    screenshot: "/projects/ai-agent.png",
+    screenshot: "https://picsum.photos/seed/ai-agent/1200/630",
     tags: ["AI", "Automation", "Full Stack"],
     tech: ["Python", "FastAPI", "LangChain", "Redis", "Next.js"],
     github: "https://github.com/naufalfadhil/ai-agent",

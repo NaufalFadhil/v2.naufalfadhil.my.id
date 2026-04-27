@@ -8,31 +8,36 @@ import { formatDate, calculateDuration } from "@/lib/utils";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Badge } from "@/components/ui/badge";
 
-const typeStyle: Record<Experience["type"], { border: string; gradient: string; badge: string }> = {
+const typeStyle: Record<Experience["type"], { border: string; gradient: string; badge: string; hover: string }> = {
   "Full-time":  {
     border: "border-l-blue-500/60",
     gradient: "from-blue-500/5 via-card to-card",
     badge: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10",
   },
   "Part-time": {
     border: "border-l-violet-500/60",
     gradient: "from-violet-500/5 via-card to-card",
     badge: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20",
+    hover: "hover:from-violet-500/20 hover:shadow-violet-500/10",
   },
   Internship: {
     border: "border-l-amber-500/60",
     gradient: "from-amber-500/5 via-card to-card",
     badge: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+    hover: "hover:from-amber-500/20 hover:shadow-amber-500/10",
   },
   Freelance: {
     border: "border-l-emerald-500/60",
     gradient: "from-emerald-500/5 via-card to-card",
     badge: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+    hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10",
   },
   Contract: {
     border: "border-l-orange-500/60",
     gradient: "from-orange-500/5 via-card to-card",
     badge: "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
+    hover: "hover:from-orange-500/20 hover:shadow-orange-500/10",
   },
 };
 
@@ -52,7 +57,7 @@ export function ExperienceTimeline() {
           return (
             <motion.div
               key={exp.id}
-              className={`rounded-xl border border-border border-l-2 ${style.border} bg-gradient-to-r ${style.gradient} p-5 hover:shadow-sm transition-shadow duration-200`}
+              className={`rounded-xl border border-border border-l-2 ${style.border} bg-gradient-to-r ${style.gradient} p-5 shadow-sm transition-all duration-300 hover:shadow-md ${style.hover}`}
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}

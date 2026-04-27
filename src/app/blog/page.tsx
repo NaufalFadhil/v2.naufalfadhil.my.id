@@ -7,12 +7,12 @@ import { Search, Calendar, ArrowRight } from "lucide-react";
 import { publishedPosts } from "@/data/blog";
 
 const cardGradients = [
-  "from-blue-500/8 via-card to-card border-l-blue-500/50",
-  "from-violet-500/8 via-card to-card border-l-violet-500/50",
-  "from-emerald-500/8 via-card to-card border-l-emerald-500/50",
-  "from-amber-500/8 via-card to-card border-l-amber-500/50",
-  "from-rose-500/8 via-card to-card border-l-rose-500/50",
-  "from-cyan-500/8 via-card to-card border-l-cyan-500/50",
+  { base: "from-blue-500/8 via-card to-card border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
+  { base: "from-violet-500/8 via-card to-card border-l-violet-500/50", hover: "hover:from-violet-500/20 hover:shadow-violet-500/10" },
+  { base: "from-emerald-500/8 via-card to-card border-l-emerald-500/50", hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10" },
+  { base: "from-amber-500/8 via-card to-card border-l-amber-500/50",  hover: "hover:from-amber-500/20 hover:shadow-amber-500/10" },
+  { base: "from-rose-500/8 via-card to-card border-l-rose-500/50",    hover: "hover:from-rose-500/20 hover:shadow-rose-500/10" },
+  { base: "from-cyan-500/8 via-card to-card border-l-cyan-500/50",    hover: "hover:from-cyan-500/20 hover:shadow-cyan-500/10" },
 ];
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
@@ -77,7 +77,7 @@ export default function BlogPage() {
         <div className="flex flex-col gap-3">
           {filtered.map((post, i) => (
             <article key={post.id}>
-              <Link href={`/blog/${post.slug}`} className={`group flex gap-5 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length]} hover:shadow-sm transition-all duration-200 p-4 overflow-hidden`}>
+              <Link href={`/blog/${post.slug}`} className={`group flex gap-5 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length].base} shadow-sm transition-all duration-300 hover:shadow-md ${cardGradients[i % cardGradients.length].hover} p-4 overflow-hidden`}>
                 {/* Thumbnail */}
                 <div className="relative w-36 sm:w-48 aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
                   {post.coverImage ? (

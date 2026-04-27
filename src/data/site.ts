@@ -8,7 +8,7 @@ export const siteConfig = {
   email: "athallah@stashidea.com",
   location: "Indonesia",
   avatar: "/avatar.jpg",
-  resume: "/resume_naufalfadhil.pdf",
+  resume: "https://drive.google.com/file/d/1xLuVQj1tTrs_BFEyWYBfRed-9UsihAh7/view",
   social: {
     github: "https://github.com/naufalfadhil",
     twitter: "https://twitter.com/nf_athallah",

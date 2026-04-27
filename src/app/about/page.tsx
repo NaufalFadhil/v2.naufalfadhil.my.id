@@ -15,21 +15,25 @@ const values = [
     title: "Ship it",
     description: "Done is better than perfect. I believe in iterating in public and learning from real usage.",
     color: "border-l-indigo-500 from-indigo-500/5",
+    hover: "hover:from-indigo-500/20 hover:shadow-indigo-500/10",
   },
   {
     title: "Simplicity",
     description: "The best code is no code. I aim to solve problems with the fewest abstractions necessary.",
     color: "border-l-violet-500 from-violet-500/5",
+    hover: "hover:from-violet-500/20 hover:shadow-violet-500/10",
   },
   {
     title: "Curiosity",
     description: "I'm perpetually curious about how things work under the hood — from compilers to human behavior.",
     color: "border-l-amber-500 from-amber-500/5",
+    hover: "hover:from-amber-500/20 hover:shadow-amber-500/10",
   },
   {
     title: "Craft",
     description: "I care deeply about the quality of my work — clean APIs, readable code, polished UIs.",
     color: "border-l-emerald-500 from-emerald-500/5",
+    hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10",
   },
 ];
 
@@ -132,7 +136,7 @@ export default function AboutPage() {
         <SectionHeader title="Values" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {values.map((v) => (
-            <div key={v.title} className={`rounded-xl border border-border border-l-2 bg-gradient-to-br ${v.color} to-transparent p-4`}>
+            <div key={v.title} className={`rounded-xl border border-border border-l-2 bg-gradient-to-br to-transparent p-4 shadow-sm transition-all duration-300 hover:shadow-md ${v.color} ${v.hover}`}>
               <h3 className="text-sm font-semibold mb-1">{v.title}</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">{v.description}</p>
             </div>

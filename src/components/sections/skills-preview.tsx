@@ -17,13 +17,13 @@ const categoryIconMap: Record<string, React.ElementType> = {
   Wrench,
 };
 
-const categoryColorMap: Record<string, { icon: string; gradient: string; border: string }> = {
-  Monitor:    { icon: "text-blue-600 dark:text-blue-400 bg-blue-500/10",    gradient: "from-blue-500/5 via-card to-card",    border: "border-l-blue-500/50" },
-  Server:     { icon: "text-violet-600 dark:text-violet-400 bg-violet-500/10", gradient: "from-violet-500/5 via-card to-card", border: "border-l-violet-500/50" },
-  Smartphone: { icon: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10", gradient: "from-emerald-500/5 via-card to-card", border: "border-l-emerald-500/50" },
-  Database:   { icon: "text-amber-600 dark:text-amber-400 bg-amber-500/10",  gradient: "from-amber-500/5 via-card to-card",  border: "border-l-amber-500/50" },
-  Cloud:      { icon: "text-cyan-600 dark:text-cyan-400 bg-cyan-500/10",     gradient: "from-cyan-500/5 via-card to-card",   border: "border-l-cyan-500/50" },
-  Wrench:     { icon: "text-zinc-600 dark:text-zinc-400 bg-zinc-500/10",     gradient: "from-zinc-500/5 via-card to-card",   border: "border-l-zinc-500/50" },
+const categoryColorMap: Record<string, { icon: string; gradient: string; border: string; hover: string }> = {
+  Monitor:    { icon: "text-blue-600 dark:text-blue-400 bg-blue-500/10",       gradient: "from-blue-500/5 via-card to-card",    border: "border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
+  Server:     { icon: "text-violet-600 dark:text-violet-400 bg-violet-500/10", gradient: "from-violet-500/5 via-card to-card",  border: "border-l-violet-500/50",  hover: "hover:from-violet-500/20 hover:shadow-violet-500/10" },
+  Smartphone: { icon: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10", gradient: "from-emerald-500/5 via-card to-card", border: "border-l-emerald-500/50", hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10" },
+  Database:   { icon: "text-amber-600 dark:text-amber-400 bg-amber-500/10",   gradient: "from-amber-500/5 via-card to-card",   border: "border-l-amber-500/50",   hover: "hover:from-amber-500/20 hover:shadow-amber-500/10" },
+  Cloud:      { icon: "text-cyan-600 dark:text-cyan-400 bg-cyan-500/10",      gradient: "from-cyan-500/5 via-card to-card",    border: "border-l-cyan-500/50",    hover: "hover:from-cyan-500/20 hover:shadow-cyan-500/10" },
+  Wrench:     { icon: "text-zinc-600 dark:text-zinc-400 bg-zinc-500/10",      gradient: "from-zinc-500/5 via-card to-card",    border: "border-l-zinc-500/50",    hover: "hover:from-zinc-500/20 hover:shadow-zinc-500/10" },
 };
 
 export function SkillsPreview() {
@@ -50,7 +50,7 @@ export function SkillsPreview() {
           return (
             <motion.div
               key={group.category}
-              className={`rounded-xl border border-border border-l-2 ${colors.border} bg-gradient-to-r ${colors.gradient} p-4 hover:shadow-sm transition-shadow duration-200`}
+              className={`rounded-xl border border-border border-l-2 ${colors.border} bg-gradient-to-r ${colors.gradient} p-4 shadow-sm transition-all duration-300 hover:shadow-md ${colors.hover}`}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}

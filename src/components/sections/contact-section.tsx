@@ -42,7 +42,7 @@ export function ContactSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Left — info */}
           <div className="flex flex-col gap-5">
-            <div className="rounded-xl border border-border border-l-2 border-l-violet-500/50 bg-gradient-to-r from-violet-500/5 via-card to-card p-5">
+            <div className="rounded-xl border border-border border-l-2 border-l-violet-500/50 bg-gradient-to-r from-violet-500/5 via-card to-card p-5 shadow-sm transition-all duration-300 hover:from-violet-500/20 hover:shadow-md hover:shadow-violet-500/10">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-1">Email</p>
               <a
                 href={`mailto:${siteConfig.email}`}
@@ -70,7 +70,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 rounded-xl border border-border border-l-2 border-l-emerald-500/50 bg-gradient-to-r from-emerald-500/5 via-card to-card p-4 text-sm">
+            <div className="flex items-start gap-3 rounded-xl border border-border border-l-2 border-l-emerald-500/50 bg-gradient-to-r from-emerald-500/5 via-card to-card p-4 text-sm shadow-sm transition-all duration-300 hover:from-emerald-500/20 hover:shadow-md hover:shadow-emerald-500/10">
               <Clock className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <p className="text-foreground/65">
                 I typically reply within{" "}

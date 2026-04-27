@@ -11,14 +11,20 @@ type ProjectCardProps = {
 };
 
 const statusColors: Record<Project["status"], string> = {
-  completed: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-  "in-progress": "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
-  archived: "bg-zinc-500/10 text-zinc-500 border-zinc-500/20",
+  completed:    "bg-emerald-500 text-white border-emerald-600",
+  "in-progress": "bg-blue-500 text-white border-blue-600",
+  archived:     "bg-zinc-500 text-white border-zinc-600",
+};
+
+const cardGradient: Record<Project["status"], string> = {
+  completed:    "border-l-emerald-500 from-emerald-500/5 hover:from-emerald-500/30 hover:shadow-emerald-500/20",
+  "in-progress": "border-l-blue-500 from-blue-500/5 hover:from-blue-500/30 hover:shadow-blue-500/20",
+  archived:     "border-l-zinc-500 from-zinc-500/5 hover:from-zinc-500/30 hover:shadow-zinc-500/20",
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="group flex flex-col overflow-hidden hover:shadow-md transition-shadow duration-200">
+    <Card className={`group flex flex-col overflow-hidden border-l-2 bg-gradient-to-b to-transparent shadow-sm transition-all duration-300 hover:shadow-md ${cardGradient[project.status]}`}>
       {/* Screenshot */}
       <div className="relative h-44 bg-muted overflow-hidden">
         {project.screenshot ? (

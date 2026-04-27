@@ -17,7 +17,7 @@ export function EducationTimeline() {
           return (
             <motion.div
               key={edu.id}
-              className="rounded-xl border border-border border-l-2 border-l-teal-500/60 bg-gradient-to-r from-teal-500/5 via-card to-card p-5 hover:shadow-sm transition-shadow duration-200"
+              className="rounded-xl border border-border border-l-2 border-l-teal-500/60 bg-gradient-to-r from-teal-500/5 via-card to-card p-5 shadow-sm transition-all duration-300 hover:from-teal-500/20 hover:shadow-md hover:shadow-teal-500/10"
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}

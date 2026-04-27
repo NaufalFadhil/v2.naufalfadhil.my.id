@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 
 const cardGradients = [
-  "from-blue-500/8 via-card to-card border-l-blue-500/50",
-  "from-violet-500/8 via-card to-card border-l-violet-500/50",
-  "from-emerald-500/8 via-card to-card border-l-emerald-500/50",
-  "from-amber-500/8 via-card to-card border-l-amber-500/50",
+  { base: "from-blue-500/8 via-card to-card border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
+  { base: "from-violet-500/8 via-card to-card border-l-violet-500/50", hover: "hover:from-violet-500/20 hover:shadow-violet-500/10" },
+  { base: "from-emerald-500/8 via-card to-card border-l-emerald-500/50", hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10" },
+  { base: "from-amber-500/8 via-card to-card border-l-amber-500/50",  hover: "hover:from-amber-500/20 hover:shadow-amber-500/10" },
 ];
 
 export function BlogPreview() {
@@ -44,7 +44,7 @@ export function BlogPreview() {
           >
             <Link
               href={`/blog/${post.slug}`}
-              className={`group flex gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length]} hover:shadow-sm transition-all duration-200 p-4 overflow-hidden`}
+              className={`group flex gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length].base} shadow-sm transition-all duration-300 hover:shadow-md ${cardGradients[i % cardGradients.length].hover} p-4 overflow-hidden`}
             >
               {/* Thumbnail */}
               <div className="relative w-28 sm:w-36 aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
