@@ -13,6 +13,7 @@ import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MdxPre } from "@/components/shared/mdx-pre";
+import { MdxImage } from "@/components/shared/mdx-image";
 import { TableOfContents } from "@/components/shared/table-of-contents";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -75,15 +76,10 @@ const mdxComponents = {
     <h4 className="text-base font-semibold text-foreground/80 mt-6 mb-2" {...props} />
   ),
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <span className="block relative w-full aspect-video my-8 rounded-xl overflow-hidden">
-      <Image
-        src={typeof props.src === "string" ? props.src : ""}
-        alt={props.alt ?? ""}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 100vw, 672px"
-      />
-    </span>
+    <MdxImage
+      src={typeof props.src === "string" ? props.src : ""}
+      alt={props.alt ?? ""}
+    />
   ),
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 rounded-xl border border-border overflow-hidden">
