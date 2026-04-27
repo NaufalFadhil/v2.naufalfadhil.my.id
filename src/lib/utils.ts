@@ -19,7 +19,7 @@ export function calculateDuration(start: string, end?: string): string {
 
   const months =
     (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-    (endDate.getMonth() - startDate.getMonth());
+    (endDate.getMonth() - startDate.getMonth()) + 1;
 
   if (months < 1) return "Less than a month";
   if (months < 12) return `${months} month${months > 1 ? "s" : ""}`;

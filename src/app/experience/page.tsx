@@ -88,7 +88,7 @@ export default function ExperiencePage() {
                   {exp.description.map((item, j) => (
                     <li key={j} className="flex gap-2 text-sm text-muted-foreground">
                       <span className="mt-1.5 h-1 w-1 rounded-full bg-muted-foreground/50 shrink-0" aria-hidden />
-                      {renderBold(item)}
+                      <span>{renderBold(item)}</span>
                     </li>
                   ))}
                 </ul>
