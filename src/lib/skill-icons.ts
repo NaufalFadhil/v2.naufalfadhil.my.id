@@ -23,7 +23,6 @@ import {
   SiVercel,
   SiRailway,
   SiGit,
-  SiVisualstudiocode,
   SiNeovim,
   SiPostman,
   SiFigma,
@@ -31,6 +30,7 @@ import {
   SiNotion,
   SiZod,
 } from "react-icons/si";
+import { VscVscode as SiVisualstudiocode } from "react-icons/vsc";
 import type { IconType } from "react-icons";
 
 // Map of icon name string → icon component
