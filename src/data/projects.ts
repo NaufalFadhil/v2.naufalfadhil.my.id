@@ -9,6 +9,8 @@ export type Project = {
   github?: string;
   demo?: string;
   featured: boolean;
+  pinned?: boolean;
+  draft?: boolean;
   status: "completed" | "in-progress" | "archived";
   year: number;
 };
@@ -27,6 +29,8 @@ export const projects: Project[] = [
     github: "https://github.com/naufalfadhil/ai-finance",
     demo: "https://finance.naufalfadhil.my.id",
     featured: true,
+    pinned: true,
+    draft: true,
     status: "in-progress",
     year: 2024,
   },
@@ -42,6 +46,8 @@ export const projects: Project[] = [
     tech: ["Go", "PostgreSQL", "MySQL", "SQLite", "Cobra CLI"],
     github: "https://github.com/naufalfadhil/dbgen",
     featured: true,
+    pinned: false,
+    draft: true,
     status: "in-progress",
     year: 2024,
   },
@@ -55,46 +61,119 @@ export const projects: Project[] = [
     tech: ["Python", "FastAPI", "LangChain", "Redis", "Next.js"],
     github: "https://github.com/naufalfadhil/ai-agent",
     featured: true,
+    pinned: false,
+    draft: true,
     status: "in-progress",
     year: 2024,
   },
   {
-    id: "portfolio-v1",
-    title: "Portfolio v1",
+    id: "portfolio-site-v1",
+    title: "Portfolio Website v1.0",
     description:
       "Previous personal portfolio website built with Next.js, showcasing projects, skills, and experience.",
     tags: ["Personal", "Portfolio"],
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
     github: "https://github.com/naufalfadhil/portfolio",
-    demo: "https://naufalfadhil.my.id",
+    demo: "https://v1-naufalfadhil.netlify.app",
+    screenshot: "/projects/personal-website-v1.svg",
     featured: false,
-    status: "archived",
-    year: 2023,
-  },
-  {
-    id: "go-restapi-boilerplate",
-    title: "Go REST API Boilerplate",
-    description:
-      "Production-ready REST API boilerplate in Go with authentication, CRUD, pagination, and Docker setup.",
-    tags: ["Backend", "Go", "Boilerplate"],
-    tech: ["Go", "Gin", "PostgreSQL", "JWT", "Docker"],
-    github: "https://github.com/naufalfadhil/go-api",
-    featured: false,
+    draft: false,
     status: "completed",
     year: 2023,
   },
   {
-    id: "laravel-cms",
-    title: "Headless CMS",
+    id: "jaklingko-mailing-system",
+    title: "JakLingko Mailing System",
     description:
-      "A lightweight headless CMS built with Laravel featuring a REST API and role-based access control.",
-    tags: ["Backend", "CMS", "Laravel"],
-    tech: ["Laravel", "PHP", "MySQL", "Vue.js"],
-    github: "https://github.com/naufalfadhil/headless-cms",
+      "Internal mailing system used to support operational workflows in Jakarta’s public transportation system.",
+    longDescription:
+      "Built as part of an internship project, this system supports internal communication and document workflows. Developed both web and mobile interfaces, ensuring smooth coordination across teams.",
+    screenshot: "/projects/jaklingko-mailing-system.svg",
+    tags: ["Enterprise", "Full Stack", "Internal Tool"],
+    tech: ["Node.js", "Express.js", "React.js", "React Native"],
+    github: undefined,
     featured: false,
+    draft: false,
+    pinned: true,
     status: "completed",
     year: 2022,
   },
+  {
+    id: "hivote",
+    title: "HiVote",
+    description:
+      "A voting platform with modern user validation and identity verification.",
+    longDescription:
+      "Designed to improve trust in digital voting, HiVote integrates machine learning for identity validation and secure vote handling. Built with a mobile-first approach and backend verification services.",
+    tags: ["Mobile", "Machine Learning", "Security"],
+    tech: ["Flutter", "Python", "Flask", "MySQL", "OpenCV"],
+    github: undefined,
+    featured: false,
+    draft: false,
+    status: "completed",
+    year: 2022,
+  },
+  {
+    id: "foodata",
+    title: "Foodata",
+    description:
+      "A mobile application to discover restaurants and food information.",
+    longDescription:
+      "Foodata helps users explore food options with a clean interface and integrated backend services. Focused on usability and real-time data retrieval.",
+    tags: ["Mobile", "Full Stack"],
+    tech: ["Flutter", "Laravel", "MySQL"],
+    github: undefined,
+    featured: false,
+    draft: false,
+    status: "completed",
+    year: 2022,
+  },
+  {
+    id: "gucc-absence",
+    title: "Assistant Absence System",
+    description:
+      "Internal system to manage attendance and payroll for university assistants.",
+    longDescription:
+      "Built for Gunadarma University Computing Center, this system streamlines attendance tracking and payroll calculation, reducing manual administrative work.",
+    tags: ["Internal Tool", "Web"],
+    tech: ["Laravel", "PostgreSQL"],
+    github: undefined,
+    featured: false,
+    draft: false,
+    status: "completed",
+    year: 2023,
+  },
+  {
+    id: "konasara-smart",
+    title: "Konasara Smart",
+    description:
+      "A system to manage scholarship and student data for regional government.",
+    longDescription:
+      "Developed to support data management for scholarship programs, enabling better tracking and organization of student records.",
+    tags: ["Government", "Web"],
+    tech: ["Laravel", "PostgreSQL"],
+    github: undefined,
+    featured: false,
+    draft: false,
+    status: "completed",
+    year: 2023,
+  },
+  {
+    id: "stashidea-sso-service",
+    title: "SSO API Services",
+    description:
+      "A personal Single Sign-On service to unify authentication across multiple projects in stashidea.com ecosystem.",
+    longDescription:
+      "Built as part of my personal ecosystem, this service centralizes authentication and simplifies user management across different applications.",
+    tags: ["Backend", "Auth"],
+    tech: ["Go", "PostgreSQL"],
+    github: undefined,
+    featured: false,
+    draft: false,
+    status: "in-progress",
+    year: 2024,
+  },
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
+export const publishedProjects = projects.filter((p) => !p.draft);
+export const featuredProjects = publishedProjects.filter((p) => p.featured);

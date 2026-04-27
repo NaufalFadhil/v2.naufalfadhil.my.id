@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { projects } from "@/data/projects";
+import { publishedProjects as projects } from "@/data/projects";
 import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
 import { ProjectCard } from "@/components/shared/project-card";
@@ -17,18 +17,24 @@ export default function ProjectsPage() {
   const [activeStatus, setActiveStatus] = useState<string>("all");
 
   const filtered = useMemo(() => {
-    return projects.filter((p) => {
-      const matchesSearch =
-        !search ||
-        p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.description.toLowerCase().includes(search.toLowerCase()) ||
-        p.tech.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+    return projects
+      .filter((p) => {
+        const matchesSearch =
+          !search ||
+          p.title.toLowerCase().includes(search.toLowerCase()) ||
+          p.description.toLowerCase().includes(search.toLowerCase()) ||
+          p.tech.some((t) => t.toLowerCase().includes(search.toLowerCase()));
 
-      const matchesTag = !activeTag || p.tags.includes(activeTag);
-      const matchesStatus = activeStatus === "all" || p.status === activeStatus;
+        const matchesTag = !activeTag || p.tags.includes(activeTag);
+        const matchesStatus = activeStatus === "all" || p.status === activeStatus;
 
-      return matchesSearch && matchesTag && matchesStatus;
-    });
+        return matchesSearch && matchesTag && matchesStatus;
+      })
+      .sort((a, b) => {
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return b.year - a.year;
+      });
   }, [search, activeTag, activeStatus]);
 
   return (

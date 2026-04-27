@@ -75,24 +75,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="gap-2 border-t border-border pt-4">
-        {project.github && (
-          <Button variant="outline" size="sm" asChild className="h-7 text-xs">
-            <a href={project.github} target="_blank" rel="noopener noreferrer">
-              <Github className="h-3.5 w-3.5" />
-              Code
-            </a>
-          </Button>
-        )}
-        {project.demo && (
-          <Button size="sm" asChild className="h-7 text-xs">
-            <a href={project.demo} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5" />
-              Demo
-            </a>
-          </Button>
-        )}
-      </CardFooter>
+      {(project.github || project.demo) && (
+        <CardFooter className="gap-2 border-t border-border pt-4">
+          {project.github && (
+            <Button variant="outline" size="sm" asChild className="h-7 text-xs">
+              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                <Github className="h-3.5 w-3.5" />
+                Code
+              </a>
+            </Button>
+          )}
+          {project.demo && (
+            <Button size="sm" asChild className="h-7 text-xs">
+              <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-3.5 w-3.5" />
+                Demo
+              </a>
+            </Button>
+          )}
+        </CardFooter>
+      )}
     </Card>
   );
 }
