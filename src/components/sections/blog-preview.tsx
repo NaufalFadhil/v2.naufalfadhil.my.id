@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
-import { latestPosts } from "@/data/blog";
+import { latestPosts, categoryStyle } from "@/data/blog";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
@@ -69,6 +69,9 @@ export function BlogPreview() {
               <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
+                      {categoryStyle[post.category].label}
+                    </span>
                     {post.tags.slice(0, 2).map((tag) => (
                       <span key={tag} className="rounded-full border border-border bg-background/60 px-2.5 py-0.5 text-xs text-foreground/70">
                         {tag}

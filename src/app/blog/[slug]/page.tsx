@@ -6,7 +6,7 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
-import { publishedPosts } from "@/data/blog";
+import { publishedPosts, categoryStyle } from "@/data/blog";
 import { getBlogContent, extractHeadings, slugifyHeading } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
@@ -104,6 +104,8 @@ export default async function BlogPostPage({ params }: Props) {
   const post = publishedPosts.find((p) => p.slug === slug);
   if (!post) notFound();
 
+  await new Promise((r) => setTimeout(r, 400));
+
   const mdxData = getBlogContent(slug);
   const headings = mdxData ? extractHeadings(mdxData.content) : [];
 
@@ -120,7 +122,10 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Article */}
         <article className="min-w-0 max-w-2xl">
           <header className="mb-8">
-            <div className="flex flex-wrap gap-1.5 mb-4">
+            <div className="flex flex-wrap items-center gap-1.5 mb-4">
+              <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
+                {categoryStyle[post.category].label}
+              </span>
               {post.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="text-xs font-normal">
                   {tag}

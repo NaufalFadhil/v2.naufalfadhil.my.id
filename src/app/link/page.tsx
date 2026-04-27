@@ -93,7 +93,7 @@ export default function LinkPage() {
 
       {/* Name */}
       <h1 className="text-xl font-bold tracking-tight">{siteConfig.name}</h1>
-      <p className="text-muted-foreground text-sm mt-1">Developer · Student · Alien</p>
+      <p className="text-muted-foreground text-sm mt-1">Developer · Builder · Alien</p>
       <p className="text-xs text-muted-foreground mt-1">{siteConfig.location}</p>
 
       {/* Links */}

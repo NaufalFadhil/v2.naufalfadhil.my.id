@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, Calendar, ArrowRight } from "lucide-react";
-import { publishedPosts } from "@/data/blog";
+import { publishedPosts, categoryStyle } from "@/data/blog";
 
 const cardGradients = [
   { base: "from-blue-500/8 via-card to-card border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
@@ -101,6 +101,9 @@ export default function BlogPage() {
                 <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
+                        {categoryStyle[post.category].label}
+                      </span>
                       {post.tags.map((tag) => (
                         <span key={tag} className="rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/70">
                           {tag}

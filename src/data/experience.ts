@@ -21,7 +21,7 @@ export const experiences: Experience[] = [
     location: "Jakarta, Indonesia",
     type: "Full-time",
     start: "2024-08-05",
-    companyProfile: "Sprint Asia is an integrated business solutions provider that enables companies to build effective customer communication across channels like messaging, chatbots, live chat, and WhatsApp Business API. Its unified and intelligent platform helps businesses improve engagement, retention, and conversion more efficiently. With features such as chatbot automation, omnichannel support, and digital vouchers, Sprint Asia supports scalable business growth.",
+    companyProfile: "Sprint Asia is an integrated business solutions provider that enables companies to build effective customer communication across channels like short messaging, chatbots, live chat, and WhatsApp Business API. Its unified and intelligent platform helps businesses improve engagement, retention, and conversion more efficiently. With features such as chatbot automation, omnichannel support, and digital vouchers, Sprint Asia supports scalable business growth.",
     summary: "Building and scaling a messaging platform used by millions — spanning backend services, feature development, and legacy migration.",
     description: [
       "Developed and maintained a **messaging platform used by millions of users**, ensuring high performance and reliability.",
