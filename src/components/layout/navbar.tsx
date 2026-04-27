@@ -46,14 +46,16 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
       )}
     >
       <Container>
-        <nav className="flex h-14 items-center justify-between gap-4">
+        <nav className="flex h-14 items-center">
           {/* Logo */}
-          <Link
-            href="/"
-            className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity shrink-0"
-          >
-            <span className="text-muted-foreground">Naufal</span> Fadhil
-          </Link>
+          <div className="flex-1">
+            <Link
+              href="/"
+              className="font-semibold text-sm tracking-tight hover:opacity-70 transition-opacity"
+            >
+              <span className="text-muted-foreground">Naufal</span> Fadhil
+            </Link>
+          </div>
 
           {/* Center nav — desktop */}
           <ul className="hidden md:flex items-center gap-1">
@@ -75,7 +77,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
           </ul>
 
           {/* Right actions */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex-1 flex items-center justify-end gap-1.5">
             {/* Command palette trigger */}
             <Button
               variant="ghost"
