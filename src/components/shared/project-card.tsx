@@ -11,20 +11,26 @@ type ProjectCardProps = {
 };
 
 const statusColors: Record<Project["status"], string> = {
-  completed:    "bg-emerald-500 text-white border-emerald-600",
-  "in-progress": "bg-blue-500 text-white border-blue-600",
+  completed:    "bg-indigo-500 text-white border-indigo-600",
+  "in-progress": "bg-amber-500 text-white border-amber-600",
   archived:     "bg-zinc-500 text-white border-zinc-600",
 };
 
 const cardGradient: Record<Project["status"], string> = {
-  completed:    "border-l-emerald-500 from-emerald-500/5 hover:from-emerald-500/30 hover:shadow-emerald-500/20",
-  "in-progress": "border-l-blue-500 from-blue-500/5 hover:from-blue-500/30 hover:shadow-blue-500/20",
-  archived:     "border-l-zinc-500 from-zinc-500/5 hover:from-zinc-500/30 hover:shadow-zinc-500/20",
+  completed:    "from-indigo-500/5 hover:from-indigo-500/30 hover:shadow-indigo-500/20",
+  "in-progress": "from-amber-500/5 hover:from-amber-500/30 hover:shadow-amber-500/20",
+  archived:     "from-zinc-500/5 hover:from-zinc-500/30 hover:shadow-zinc-500/20",
+};
+
+const contentBorder: Record<Project["status"], string> = {
+  completed:    "border-l-indigo-500",
+  "in-progress": "border-l-amber-500",
+  archived:     "border-l-zinc-500",
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className={`group flex flex-col overflow-hidden border-l-2 bg-gradient-to-b to-transparent shadow-sm transition-all duration-300 hover:shadow-md ${cardGradient[project.status]}`}>
+    <Card className={`group flex flex-col overflow-hidden bg-gradient-to-b to-transparent shadow-sm transition-all duration-300 hover:shadow-md ${cardGradient[project.status]}`}>
       {/* Screenshot */}
       <div className="relative h-44 bg-muted overflow-hidden">
         {project.screenshot ? (
@@ -52,6 +58,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Content */}
+      <div className={`flex flex-col flex-1 border-l-2 rounded-bl-xl ${contentBorder[project.status]}`}>
       <CardContent className="flex-1 pt-5">
         <h3 className="font-semibold text-base leading-tight mb-1">
           {project.title}
@@ -95,6 +102,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           )}
         </CardFooter>
       )}
+      </div>
     </Card>
   );
 }
