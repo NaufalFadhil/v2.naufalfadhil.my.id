@@ -17,35 +17,38 @@ export function MdxPre({ children, className, style, ...props }: React.HTMLAttri
 
   return (
     <div className="relative group/pre my-6 not-prose">
-      <pre
-        ref={preRef}
-        style={style}
-        className={cn(
-          // default styling — shiki inline `style` bg will override the Tailwind bg class
-          "overflow-x-auto rounded-xl border border-border bg-[#22272e] p-5 text-sm leading-relaxed text-[#adbac7]",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </pre>
-      <button
-        onClick={handleCopy}
-        aria-label="Copy code"
-        className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/50 opacity-0 backdrop-blur-sm transition-all group-hover/pre:opacity-100 hover:border-white/20 hover:bg-white/10 hover:text-white/80"
-      >
-        {copied ? (
-          <>
-            <Check className="h-3 w-3" />
-            Copied
-          </>
-        ) : (
-          <>
-            <Copy className="h-3 w-3" />
-            Copy
-          </>
-        )}
-      </button>
+      <div data-code-header="" />
+      <div className="relative">
+        <pre
+          ref={preRef}
+          style={style}
+          className={cn(
+            // default styling — shiki inline `style` bg will override the Tailwind bg class
+            "overflow-x-auto rounded-b-xl border border-[#444c56] bg-[#22272e] p-5 text-sm leading-relaxed text-[#adbac7]",
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </pre>
+        <button
+          onClick={handleCopy}
+          aria-label="Copy code"
+          className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/50 opacity-0 backdrop-blur-sm transition-all group-hover/pre:opacity-100 hover:border-white/20 hover:bg-white/10 hover:text-white/80"
+        >
+          {copied ? (
+            <>
+              <Check className="h-3 w-3" />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy className="h-3 w-3" />
+              Copy
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ export const siteConfig = {
     "Software Engineer", 
     "Backend Engineer", 
     "Full-Stack Engineer",
+    "Android & iOS Engineer",
     "Product Engineer & Designer",
     "Developer, Operations, and Infrastructure Engineer",
     "Security Engineer (Penetration Testing & Bug Bounty)",

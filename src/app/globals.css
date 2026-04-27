@@ -92,6 +92,12 @@
   }
 }
 
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.875rem;
+  }
+}
+
 /* Strip prose table borders — custom MDX table component handles all styling */
 .prose table {
   margin: 0;
@@ -117,6 +123,12 @@
   padding: 1.25rem 1.5rem;
   font-size: 0.875rem;
   line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  [data-rehype-pretty-code-figure] pre {
+    font-size: 0.75rem;
+  }
 }
 
 [data-rehype-pretty-code-figure] code {
@@ -164,13 +176,46 @@
   margin-top: 0 !important;
 }
 
-[data-rehype-pretty-code-title] + div > pre {
+[data-rehype-pretty-code-title] + div > div > pre {
   border-radius: 0 0 0.75rem 0.75rem;
   border-top: 1px solid #373e47;
 }
 
 /* Fallback for bare pre (no MdxPre wrapper) */
 [data-rehype-pretty-code-title] + pre {
+  border-radius: 0 0 0.75rem 0.75rem;
+  border-top: 1px solid #373e47;
+}
+
+/* Empty header bar (traffic-light dots) for untitled code blocks */
+[data-code-header] {
+  display: flex;
+  align-items: center;
+  border: 1px solid #444c56;
+  border-bottom: none;
+  border-radius: 0.75rem 0.75rem 0 0;
+  background: #2d333b;
+  padding: 0.5rem 1rem;
+}
+
+[data-code-header]::before {
+  content: "";
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: #ff5f57;
+  box-shadow: 1rem 0 0 #ffbd2e, 2rem 0 0 #28c840;
+  flex-shrink: 0;
+}
+
+/* Hide empty header when a title figcaption is already present */
+[data-rehype-pretty-code-title] + div [data-code-header] {
+  display: none;
+}
+
+/* Separator + rounded-bottom — must beat [data-rehype-pretty-code-figure] pre (110 specificity) */
+[data-rehype-pretty-code-figure] [data-code-header] + div > pre {
   border-radius: 0 0 0.75rem 0.75rem;
   border-top: 1px solid #373e47;
 }
