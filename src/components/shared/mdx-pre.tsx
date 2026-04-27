@@ -22,7 +22,7 @@ export function MdxPre({ children, className, style, ...props }: React.HTMLAttri
         style={style}
         className={cn(
           // default styling — shiki inline `style` bg will override the Tailwind bg class
-          "overflow-x-auto rounded-xl border border-border bg-[#22272e] p-5 text-sm leading-relaxed",
+          "overflow-x-auto rounded-xl border border-border bg-[#22272e] p-5 text-sm leading-relaxed text-[#adbac7]",
           className,
         )}
         {...props}

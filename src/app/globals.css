@@ -79,12 +79,30 @@
   ::selection {
     @apply bg-foreground/10;
   }
+
+  pre ::selection,
+  pre *::selection {
+    background-color: rgba(99, 102, 241, 0.35);
+  }
 }
 
 @layer utilities {
   .pause-animation:hover {
     animation-play-state: paused;
   }
+}
+
+/* Strip prose table borders — custom MDX table component handles all styling */
+.prose table {
+  margin: 0;
+  border: 0;
+}
+.prose thead {
+  border-bottom: 0;
+}
+.prose tbody tr {
+  border-top: 0;
+  border-bottom: 0;
 }
 
 /* rehype-pretty-code code block styling */

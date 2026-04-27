@@ -86,12 +86,14 @@ const mdxComponents = {
     </span>
   ),
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-6 rounded-xl border border-border">
-      <table className="w-full text-sm" {...props} />
+    <div className="my-6 rounded-xl border border-border overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm" {...props} />
+      </div>
     </div>
   ),
   th: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th className="bg-muted/60 px-4 py-2.5 text-left text-xs font-semibold text-foreground/80 first:rounded-tl-xl last:rounded-tr-xl" {...props} />
+    <th className="bg-muted/60 px-4 py-2.5 text-left text-xs font-semibold text-foreground/80" {...props} />
   ),
   td: (props: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td className="border-t border-border px-4 py-2.5 text-foreground/70" {...props} />
