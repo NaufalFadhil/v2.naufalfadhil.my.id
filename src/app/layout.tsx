@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { RootClient } from "@/components/layout/root-client";
+import { CursorGlow } from "@/components/shared/cursor-glow";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,6 +81,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <CursorGlow />
           <RootClient>{children}</RootClient>
         </ThemeProvider>
       </body>
