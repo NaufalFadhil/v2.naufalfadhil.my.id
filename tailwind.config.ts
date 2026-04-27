@@ -55,7 +55,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
-        "marquee-left": {
+"marquee-left": {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
         },
