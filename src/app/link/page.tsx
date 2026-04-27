@@ -11,6 +11,7 @@ import {
   Heart,
   BookOpen,
 } from "lucide-react";
+import { SiMedium } from "react-icons/si";
 import { siteConfig } from "@/data/site";
 import { Container } from "@/components/layout/container";
 
@@ -35,20 +36,26 @@ const links = [
   {
     href: siteConfig.social.twitter,
     label: "Twitter / X",
-    description: "@naufalfadhil",
+    description: "@nf_athallah",
     Icon: Twitter,
   },
   {
     href: siteConfig.social.linkedin,
     label: "LinkedIn",
-    description: "Naufal Fadhil",
+    description: "Naufal Fadhil Athallah",
     Icon: Linkedin,
   },
   {
     href: siteConfig.social.instagram,
     label: "Instagram",
-    description: "@naufalfadhil",
+    description: "@nf_athallah",
     Icon: Instagram,
+  },
+  {
+    href: siteConfig.social.medium,
+    label: "Medium",
+    description: "@naufal-fadhil",
+    Icon: SiMedium,
   },
   {
     href: "/blog",

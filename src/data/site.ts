@@ -14,6 +14,7 @@ export const siteConfig = {
     twitter: "https://twitter.com/nf_athallah",
     linkedin: "https://linkedin.com/in/naufalfadhil",
     instagram: "https://instagram.com/nf_athallah",
+    medium: "https://medium.com/@naufal-fadhil",
   },
 };
 

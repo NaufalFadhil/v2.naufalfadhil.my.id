@@ -2,25 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Github,
-  Twitter,
-  Linkedin,
-  Instagram,
-  Mail,
-  ArrowRight,
-  Download,
-} from "lucide-react";
+import { Mail, ArrowRight, Download } from "lucide-react";
+import { SiGithub, SiX, SiInstagram, SiMedium } from "react-icons/si";
+import { FaLinkedinIn } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/data/site";
 import { Button } from "@/components/ui/button";
 
 const socialLinks = [
-  { href: siteConfig.social.github, label: "GitHub", Icon: Github },
-  { href: siteConfig.social.twitter, label: "Twitter", Icon: Twitter },
-  { href: siteConfig.social.linkedin, label: "LinkedIn", Icon: Linkedin },
-  { href: siteConfig.social.instagram, label: "Instagram", Icon: Instagram },
-  { href: `mailto:${siteConfig.email}`, label: "Email", Icon: Mail },
+  { href: siteConfig.social.github,   label: "GitHub",    Icon: SiGithub    },
+  { href: siteConfig.social.twitter,  label: "Twitter",   Icon: SiX         },
+  { href: siteConfig.social.linkedin, label: "LinkedIn",  Icon: FaLinkedinIn },
+  { href: siteConfig.social.instagram,label: "Instagram", Icon: SiInstagram },
+  { href: siteConfig.social.medium,   label: "Medium",    Icon: SiMedium    },
+  { href: `mailto:${siteConfig.email}`,label: "Email",    Icon: Mail        },
 ];
 
 const containerVariants = {
