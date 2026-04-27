@@ -105,9 +105,9 @@ export default function BlogPage() {
         <div className="flex flex-col gap-3">
           {visible.map((post, i) => (
             <article key={post.id}>
-              <Link href={`/blog/${post.slug}`} className={`group flex gap-5 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length].base} shadow-sm transition-all duration-300 hover:shadow-md ${cardGradients[i % cardGradients.length].hover} p-4 overflow-hidden`}>
+              <Link href={`/blog/${post.slug}`} className={`group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${cardGradients[i % cardGradients.length].base} shadow-sm transition-all duration-300 hover:shadow-md ${cardGradients[i % cardGradients.length].hover} p-4 overflow-hidden`}>
                 {/* Thumbnail */}
-                <div className="relative w-36 sm:w-48 aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
+                <div className="relative w-full aspect-[16/9] sm:w-48 sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
                   {post.coverImage ? (
                     <Image
                       src={post.coverImage}
