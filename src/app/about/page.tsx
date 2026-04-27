@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { MapPin, Coffee, Music, BookOpen, Gamepad2, Globe } from "lucide-react";
+import { MapPin, Coffee, Music, BookOpen, Gamepad2, Globe, Monitor } from "lucide-react";
 import { siteConfig } from "@/data/site";
 import { Container } from "@/components/layout/container";
 import { SectionHeader } from "@/components/shared/section-header";
@@ -12,26 +12,26 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    title: "Ship it",
+    title: "Ship > Perfect",
     description: "Done is better than perfect. I believe in iterating in public and learning from real usage.",
     color: "border-l-indigo-500 from-indigo-500/5",
     hover: "hover:from-indigo-500/20 hover:shadow-indigo-500/10",
   },
   {
-    title: "Simplicity",
-    description: "The best code is no code. I aim to solve problems with the fewest abstractions necessary.",
+    title: "Keep it simple",
+    description: "Good systems are understandable systems. I avoid unnecessary complexity whenever possible.",
     color: "border-l-violet-500 from-violet-500/5",
     hover: "hover:from-violet-500/20 hover:shadow-violet-500/10",
   },
   {
-    title: "Curiosity",
-    description: "I'm perpetually curious about how things work under the hood — from compilers to human behavior.",
+    title: "Stay curious",
+    description: "I like digging into how things actually work — from distributed systems to human behavior.",
     color: "border-l-amber-500 from-amber-500/5",
     hover: "hover:from-amber-500/20 hover:shadow-amber-500/10",
   },
   {
-    title: "Craft",
-    description: "I care deeply about the quality of my work — clean APIs, readable code, polished UIs.",
+    title: "Care about the craft",
+    description: "I care deeply about the quality of my work — Clean APIs, readable code, and thoughtful UX matter. Details compound.",
     color: "border-l-emerald-500 from-emerald-500/5",
     hover: "hover:from-emerald-500/20 hover:shadow-emerald-500/10",
   },
@@ -42,15 +42,16 @@ const interests = [
   { icon: Music,    label: "Music",   color: "border-violet-500/40 text-violet-600 dark:text-violet-400 bg-violet-500/5" },
   { icon: BookOpen, label: "Reading", color: "border-indigo-500/40 text-indigo-600 dark:text-indigo-400 bg-indigo-500/5" },
   { icon: Gamepad2, label: "Gaming",  color: "border-blue-500/40   text-blue-600   dark:text-blue-400   bg-blue-500/5"   },
+  { icon: Monitor,   label: "Tech",    color: "border-teal-500/40    text-teal-600    dark:text-teal-400    bg-teal-500/5"    },
   { icon: Globe,    label: "Travel",  color: "border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5" },
 ];
 
 const funFacts = [
-  "I've been coding since I was 14, starting with HTML & CSS for fan sites.",
-  "My first paid project was a simple school website for $15.",
-  "I type at ~100 WPM and use a custom keyboard layout.",
-  "I prefer dark mode at all times, even on paper (hypothetically).",
-  "I once debugged a production issue at 3am from my phone.",
+  "I've been coding since I was 16, starting with simple C/C++ robotics projects and evolving into web development",
+  "My first paid project is winning a robotics competition and get a cash prize IDR 1 Million (around $70) — not bad for a first gig!",
+  "I have a habit of over-engineering solutions for fun — building a custom home server with Kubernetes and Ansible just to host my personal website and projects.",
+  "I prefer dark mode at all times, even on paper (hypothetically). Please never trust a light mode user.",
+  "Occasionally handle production issues when called, even outside working hours — I find it oddly satisfying to debug and fix things under pressure.",
 ];
 
 export default function AboutPage() {
@@ -75,14 +76,13 @@ export default function AboutPage() {
         <SectionHeader title="Bio" />
         <div className="space-y-4 text-sm text-muted-foreground leading-relaxed max-w-2xl">
           <p>
-            Hey, I&apos;m Naufal — a developer, student, and (self-proclaimed) alien from Indonesia.
-            I spend most of my time building things for the web: from backend APIs in Go and Laravel,
-            to polished frontends in Next.js.
+            Hey, I&apos;m Naufal — a builder, engineer, and occasional alien based in Indonesia. I spend most of my time turning messy ideas into working systems — from backend services in Go and Laravel to full-stack products that people actually use.
           </p>
           <p>
-            I&apos;m currently studying Informatics Engineering and working on side projects that scratch
-            my own itches. I believe the best way to learn is to build real things, ship them, and
-            learn from the feedback loop.
+            I&apos;m currently studying Informatics Engineering while building and shipping projects on the side. I don't really separate "learning" and "working" — for me, the fastest way to understand something is to build it, ship it, and see what breaks.
+          </p>
+          <p>
+            Lately, I&apos;ve been going deeper into AI, developer tooling, and system design — not just experimenting, but trying to build things that are genuinely useful.
           </p>
           <p>
             When I&apos;m not coding, I&apos;m probably reading, listening to music, or exploring a new
@@ -94,18 +94,24 @@ export default function AboutPage() {
 
       {/* Journey */}
       <section className="mb-12">
-        <SectionHeader title="Journey" />
+      <SectionHeader
+        title="Journey"
+        description={`${new Date().getFullYear() - 2013} years of building, learning, and shipping — from tech nerds to engineering systems.`}
+      />
         <div className="relative">
           <div className="absolute left-3.5 top-0 bottom-0 w-px bg-border" aria-hidden />
           <div className="flex flex-col gap-6">
             {(() => {
               const items = [
-                { year: "2024", title: "Going deeper into AI tooling", desc: "Exploring LLMs, agents, and building AI-powered products.", dot: "bg-background border-indigo-500", inner: "bg-indigo-500" },
-                { year: "2024", title: "Launched first SaaS product", desc: "Shipped a side project that got real paying users within the first month.", dot: "bg-background border-indigo-500", inner: "bg-indigo-500" },
-                { year: "2023", title: "First serious freelance work", desc: "Started taking freelance projects and building production apps for clients.", dot: "bg-background border-violet-500", inner: "bg-violet-500" },
-                { year: "2022", title: "Got into competitive programming", desc: "Joined the university team and fell in love with algorithms.", dot: "bg-background border-blue-500", inner: "bg-blue-500" },
-                { year: "2021", title: "Started university", desc: "Enrolled in Informatics Engineering. Switched from hobbyist to serious developer.", dot: "bg-background border-teal-500", inner: "bg-teal-500" },
-                { year: "2018", title: "First line of code", desc: "Built my first website at 14 — a fan site with Comic Sans and neon colors.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+                { year: "2026", title: "Future goals and aspirations", desc: "Continuing to grow as a developer, building impactful products, and exploring new frontiers in technology.", dot: "bg-background border-amber-500", inner: "bg-amber-500" },
+                { year: "2023", title: "Graduated and looking for new opportunities", desc: "Finished my bachelor's degree and excited to take on new challenges in software engineering.", dot: "bg-background border-indigo-500", inner: "bg-indigo-500" },
+                { year: "2020", title: "First internship and part-time job", desc: "Gained real-world experience working on production systems for a transportation startup and my university's computing center.", dot: "bg-background border-violet-500", inner: "bg-violet-500" },
+                { year: "2019", title: "Started university and web development journey", desc: "Began studying informatics engineering and building web projects using JavaScript and PHP.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+                { year: "2018", title: "Winning a robotics competition", desc: "Won a regional robotics competition from solving a real-world problem and got a cash prize for my first paid gig.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+                { year: "2017", title: "First coding experience", desc: "Joined a robotics club and started learning C/C++ to program microcontrollers for fun projects.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+                { year: "2016", title: "Vocational school", desc: "Studied computer and network engineering, got hands-on experience with hardware and networking.", dot: "bg-background border-emerald-500", inner: "bg-emerald-500" },
+                { year: "2013", title: "Playing with computers and gadgets", desc: "Tinkering with anything I can get my hands on — from old PCs to smartphones.", dot: "bg-background border-amber-500", inner: "bg-amber-500" },
+
               ];
               return items.map(({ year, title, desc, dot, inner }, i) => {
                 const isFirstOfYear = items[i - 1]?.year !== year;
@@ -165,10 +171,12 @@ export default function AboutPage() {
         <SectionHeader title="Goals" />
         <ul className="space-y-2">
           {[
-            "Ship an AI-powered SaaS product with 100+ paying users.",
+            "Ship an product that people actually pay for and rely on.",
+            "Go deeper into systems, infrastructure, and scalable architectures.",
             "Contribute meaningfully to open source projects I use daily.",
-            "Build a developer community around open tools and knowledge sharing.",
             "Work with a world-class team on products that matter.",
+            "Building a company with many products helping real users and customers.",
+            "Travelling to new places and experiencing different cultures.",
           ].map((goal) => (
             <li key={goal} className="flex gap-3 text-sm text-muted-foreground">
               <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-foreground shrink-0" />
