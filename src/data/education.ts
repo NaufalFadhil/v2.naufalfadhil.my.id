@@ -9,6 +9,7 @@ export type Education = {
   gpa?: string;
   description?: string[];
   activities?: string[];
+  color?: "teal" | "indigo" | "amber";
 };
 
 export const education: Education[] = [
@@ -17,6 +18,7 @@ export const education: Education[] = [
     degree: "Bachelor of Science",
     major: "Informatics Engineering",
     institution: "State University",
+    color: "indigo",
     location: "Indonesia",
     start: "2019-09-01",
     end: "2023-08-31",
@@ -36,6 +38,7 @@ export const education: Education[] = [
     degree: "Technical Student",
     major: "Computer & Network Engineering",
     institution: "Bangun Nusa Bangsa Vocational School",
+    color: "amber",
     location: "Indonesia",
     start: "2016-07-01",
     end: "2019-06-01",

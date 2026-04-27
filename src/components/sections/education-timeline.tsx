@@ -6,6 +6,36 @@ import { education } from "@/data/education";
 import { formatDate, calculateDuration } from "@/lib/utils";
 import { SectionHeader } from "@/components/shared/section-header";
 
+const colorScheme = {
+  indigo: {
+    card:     "border-l-indigo-500/60 from-indigo-500/5 hover:from-indigo-500/20 hover:shadow-indigo-500/10",
+    icon:     "bg-indigo-500/10",
+    iconText: "text-indigo-600 dark:text-indigo-400",
+    ping:     "bg-indigo-400",
+    dot2:     "bg-indigo-500",
+    badge:    "border-indigo-500/20 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+    bullet:   "bg-indigo-500/50",
+  },
+  teal: {
+    card:     "border-l-teal-500/60 from-teal-500/5 hover:from-teal-500/20 hover:shadow-teal-500/10",
+    icon:     "bg-teal-500/10",
+    iconText: "text-teal-600 dark:text-teal-400",
+    ping:     "bg-teal-400",
+    dot2:     "bg-teal-500",
+    badge:    "border-teal-500/20 bg-teal-500/10 text-teal-600 dark:text-teal-400",
+    bullet:   "bg-teal-500/50",
+  },
+  amber: {
+    card:     "border-l-amber-500/60 from-amber-500/5 hover:from-amber-500/20 hover:shadow-amber-500/10",
+    icon:     "bg-amber-500/10",
+    iconText: "text-amber-600 dark:text-amber-400",
+    ping:     "bg-amber-400",
+    dot2:     "bg-amber-500",
+    badge:    "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+    bullet:   "bg-amber-500/50",
+  },
+};
+
 export function EducationTimeline() {
   return (
     <section className="py-16">
@@ -14,10 +44,11 @@ export function EducationTimeline() {
       <div className="flex flex-col gap-4">
         {education.map((edu, i) => {
           const isPresent = !edu.end;
+          const c = colorScheme[edu.color ?? "teal"];
           return (
             <motion.div
               key={edu.id}
-              className="rounded-xl border border-border border-l-2 border-l-teal-500/60 bg-gradient-to-r from-teal-500/5 via-card to-card p-5 shadow-sm transition-all duration-300 hover:from-teal-500/20 hover:shadow-md hover:shadow-teal-500/10"
+              className={`rounded-xl border border-border border-l-2 bg-gradient-to-r via-card to-card p-5 shadow-sm transition-all duration-300 hover:shadow-md ${c.card}`}
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -26,8 +57,8 @@ export function EducationTimeline() {
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <div className="flex h-5 w-5 items-center justify-center rounded-md bg-teal-500/10">
-                      <GraduationCap className="h-3 w-3 text-teal-600 dark:text-teal-400" />
+                    <div className={`flex h-5 w-5 items-center justify-center rounded-md ${c.icon}`}>
+                      <GraduationCap className={`h-3 w-3 ${c.iconText}`} />
                     </div>
                     <h3 className="font-semibold text-base leading-tight">
                       {edu.degree} — {edu.major}
@@ -47,8 +78,8 @@ export function EducationTimeline() {
                   <div className="flex items-center gap-1.5">
                     {isPresent && (
                       <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500" />
+                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${c.ping} opacity-75`} />
+                        <span className={`relative inline-flex rounded-full h-2 w-2 ${c.dot2}`} />
                       </span>
                     )}
                     <span className="text-xs text-muted-foreground whitespace-nowrap">
@@ -56,7 +87,7 @@ export function EducationTimeline() {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="inline-flex items-center rounded-full border border-teal-500/20 bg-teal-500/10 px-2 py-0.5 text-xs font-medium text-teal-600 dark:text-teal-400">
+                    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${c.badge}`}>
                       {calculateDuration(edu.start, edu.end)}
                     </span>
                     {edu.gpa && (
@@ -72,7 +103,7 @@ export function EducationTimeline() {
                 <ul className="space-y-1.5 mt-2 mb-3 pl-7">
                   {edu.description.map((item, j) => (
                     <li key={j} className="flex gap-2 text-sm text-foreground/65">
-                      <span className="mt-1.5 h-1 w-1 rounded-full bg-teal-500/50 shrink-0" aria-hidden />
+                      <span className={`mt-1.5 h-1 w-1 rounded-full ${c.bullet} shrink-0`} aria-hidden />
                       {item}
                     </li>
                   ))}
