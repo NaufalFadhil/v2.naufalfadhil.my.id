@@ -57,7 +57,7 @@ Tabel:
 
 Gambar:
 
-![Alt text](https://url-gambar.com/image.jpg)
+![Alt text](/blogs/nama-artikel-ku/nama-gambar.png)
 
 Inline `code` juga bisa.
 
@@ -68,9 +68,38 @@ Inline `code` juga bisa.
 
 Hanya `##` (h2) dan `###` (h3) yang otomatis masuk sidebar ToC.
 
+## 3. Optimasi gambar
+
+Setiap gambar yang ditaruh di `public/blogs/` perlu dioptimasi supaya browser bisa load versi yang paling sesuai resolusi layar.
+
+### Cara pakai
+
+1. Taruh gambar original (PNG/JPG) di folder blog:
+   ```
+   public/blogs/nama-artikel-ku/nama-gambar.png
+   ```
+
+2. Jalankan script optimizer:
+   ```bash
+   npm run optimize-images
+   ```
+
+3. Script akan otomatis:
+   - Generate versi WebP di 480w, 768w, 960w, 1440w
+   - Update `src/generated/image-manifest.ts`
+
+4. Gunakan gambar di MDX dengan path ke file original:
+   ```mdx
+   ![Alt text](/blogs/nama-artikel-ku/nama-gambar.png)
+   ```
+   Komponen akan otomatis pakai versi WebP yang sudah dioptimasi.
+
+> Jalankan `npm run optimize-images` setiap kali menambah gambar baru.
+
 ## Checklist sebelum publish
 
 - [ ] `slug` di `blog.ts` sama persis dengan nama file `.mdx`
 - [ ] `published: true`
 - [ ] File ada di `content/blog/`
 - [ ] Minimal ada satu `##` heading supaya ToC muncul
+- [ ] Gambar sudah dioptimasi dengan `npm run optimize-images`

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
@@ -15,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { MdxPre } from "@/components/shared/mdx-pre";
 import { MdxImage } from "@/components/shared/mdx-image";
 import { TableOfContents } from "@/components/shared/table-of-contents";
+import { ZoomableImage } from "@/components/shared/zoomable-image";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -147,13 +147,10 @@ export default async function BlogPostPage({ params }: Props) {
 
           {post.coverImage && (
             <div className="relative w-full aspect-video mb-10 rounded-xl overflow-hidden border border-border">
-              <Image
+              <ZoomableImage
                 src={post.coverImage}
                 alt={post.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, 672px"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
           )}
