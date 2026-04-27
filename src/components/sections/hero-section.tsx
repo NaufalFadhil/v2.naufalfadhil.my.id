@@ -32,25 +32,23 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-function RoleRotator() {
-  const [index, setIndex] = useState(0);
+function RoleRotator({ index, onIndexChange }: { index: number; onIndexChange: (i: number) => void }) {
   const [dotVisible, setDotVisible] = useState(false);
   const isFirst = useRef(true);
 
   useEffect(() => {
     setDotVisible(false);
-    // first render: only enter anim (380ms), subsequent: exit + enter (760ms)
     const delay = isFirst.current ? 420 : 800;
     isFirst.current = false;
     const showDot = setTimeout(() => setDotVisible(true), delay);
     const rotate = setTimeout(() => {
-      setIndex((i) => (i + 1) % siteConfig.roles.length);
-    }, 2400);
+      onIndexChange((index + 1) % siteConfig.roles.length);
+    }, 2500);
     return () => {
       clearTimeout(showDot);
       clearTimeout(rotate);
     };
-  }, [index]);
+  }, [index, onIndexChange]);
 
   return (
     <span className="inline-flex items-baseline gap-0.5">
@@ -63,7 +61,7 @@ function RoleRotator() {
           transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
           className="inline-block"
         >
-          {siteConfig.roles[index]}
+          {siteConfig.roles[index].title}
         </motion.span>
       </AnimatePresence>
       <motion.span
@@ -78,6 +76,8 @@ function RoleRotator() {
 }
 
 export function HeroSection() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
   return (
     <section className="pt-28 pb-20 sm:pt-36">
       <motion.div
@@ -114,19 +114,25 @@ export function HeroSection() {
             {siteConfig.name}
           </h1>
           <p className="text-foreground/60 mt-1.5 text-lg">
-            <RoleRotator />
+            <RoleRotator index={roleIndex} onIndexChange={setRoleIndex} />
           </p>
         </motion.div>
 
         {/* Bio */}
-        <motion.p
-          variants={itemVariants}
-          className="text-foreground/65 leading-relaxed max-w-xl text-base"
-        >
-          I'm a backend engineer who helps turn complex business requirements into reliable, working systems.
-          I focus on delivering clean, efficient solutions that are easy to maintain and scale. 
-          I've worked with PHP, Java, JavaScript, Go, and Rust, and I adapt quickly to different project needs and environments.
-        </motion.p>
+        <motion.div variants={itemVariants} className="max-w-sm min-h-[3rem]">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={roleIndex}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="text-foreground/65 leading-relaxed text-base"
+            >
+              {siteConfig.roles[roleIndex].description}
+            </motion.p>
+          </AnimatePresence>
+        </motion.div>
 
         {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
