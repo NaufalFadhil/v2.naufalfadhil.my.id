@@ -22,7 +22,7 @@ export const siteConfig = {
   description:
     "Personal portfolio of Naufal Fadhil — a developer, builder, and alien who builds things for the web.",
   url: "https://naufalfadhil.my.id",
-  ogImage: "/N-Blue.svg",
+  ogImage: "/opengraph-image",
   email: "athallah@stashidea.com",
   location: "Indonesia",
   avatar: "/avatar.png",
