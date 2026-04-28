@@ -50,10 +50,39 @@ export function ProjectCard({ project }: ProjectCardProps) {
               className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-muted/40">
-              <span className="text-3xl font-bold text-muted-foreground/20 select-none">
+            <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-5 ${
+              project.status === "completed" ? "bg-gradient-to-br from-indigo-500/10 to-indigo-500/5" :
+              project.status === "in-progress" ? "bg-gradient-to-br from-amber-500/10 to-amber-500/5" :
+              "bg-gradient-to-br from-zinc-500/10 to-zinc-500/5"
+            }`}>
+              {/* Decorative blobs */}
+              <div className={`absolute -top-6 -right-6 h-24 w-24 rounded-full opacity-40 blur-2xl ${
+                project.status === "completed" ? "bg-indigo-500" :
+                project.status === "in-progress" ? "bg-amber-500" : "bg-zinc-500"
+              }`} />
+              <div className={`absolute -bottom-6 -left-6 h-20 w-20 rounded-full opacity-30 blur-2xl ${
+                project.status === "completed" ? "bg-indigo-400" :
+                project.status === "in-progress" ? "bg-amber-400" : "bg-zinc-400"
+              }`} />
+              {/* Title initial */}
+              <span className={`text-4xl font-black select-none opacity-40 ${
+                project.status === "completed" ? "text-indigo-600 dark:text-indigo-400" :
+                project.status === "in-progress" ? "text-amber-600 dark:text-amber-400" : "text-zinc-600 dark:text-zinc-400"
+              }`}>
                 {project.title.charAt(0)}
               </span>
+              {/* Tech pills */}
+              <div className="flex flex-wrap justify-center gap-1.5 px-2">
+                {project.tech.slice(0, 4).map((t) => (
+                  <span key={t} className={`rounded-full border px-2 py-0.5 text-[10px] backdrop-blur-sm ${
+                    project.status === "completed" ? "border-indigo-500/30 bg-indigo-500/10 text-indigo-700 dark:text-indigo-400" :
+                    project.status === "in-progress" ? "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400" :
+                    "border-zinc-500/30 bg-zinc-500/10 text-zinc-700 dark:text-zinc-400"
+                  }`}>
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
           {/* Status badge */}
