@@ -13,6 +13,7 @@ export type Project = {
   draft?: boolean;
   status: "completed" | "in-progress" | "archived";
   year: number;
+  icon?: string;
 };
 
 export const projects: Project[] = [
@@ -108,6 +109,7 @@ export const projects: Project[] = [
     tags: ["Mobile", "Machine Learning", "Security"],
     tech: ["Flutter", "Python", "Flask", "MySQL", "OpenCV"],
     github: undefined,
+    icon: "HiVote",
     featured: false,
     draft: false,
     status: "completed",
@@ -123,6 +125,7 @@ export const projects: Project[] = [
     tags: ["Mobile", "Full Stack"],
     tech: ["Flutter", "Laravel", "MySQL"],
     github: undefined,
+    icon: "Foodata",
     featured: false,
     draft: false,
     status: "completed",
@@ -138,6 +141,7 @@ export const projects: Project[] = [
     tags: ["Internal Tool", "Web"],
     tech: ["Laravel", "PostgreSQL"],
     github: undefined,
+    icon: "GUCC Absence",
     featured: false,
     draft: false,
     status: "completed",
@@ -153,6 +157,7 @@ export const projects: Project[] = [
     tags: ["Government", "Web"],
     tech: ["Laravel", "PostgreSQL"],
     github: undefined,
+    icon: "Konasara",
     featured: false,
     draft: false,
     status: "completed",
@@ -168,6 +173,7 @@ export const projects: Project[] = [
     tags: ["Backend", "Auth"],
     tech: ["Go", "PostgreSQL"],
     github: undefined,
+    icon: "Single Sign-On",
     featured: false,
     draft: false,
     status: "in-progress",

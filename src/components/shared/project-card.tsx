@@ -118,8 +118,12 @@ export function ProjectCard({ project, colorIndex = 0 }: ProjectCardProps) {
             <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 p-5 bg-gradient-to-br ${c.placeholder}`}>
               <div className={`absolute -top-6 -right-6 h-24 w-24 rounded-full opacity-40 blur-2xl ${c.blob1}`} />
               <div className={`absolute -bottom-6 -left-6 h-20 w-20 rounded-full opacity-30 blur-2xl ${c.blob2}`} />
-              <span className={`text-4xl font-black select-none opacity-40 ${c.initial}`}>
-                {project.title.charAt(0)}
+              <span className={`select-none ${
+                project.icon
+                  ? `font-bold ${c.initial} ${project.icon.length === 1 ? "text-5xl opacity-80" : project.icon.length <= 4 ? "text-3xl opacity-90" : "text-xl opacity-90"}`
+                  : `text-4xl font-black opacity-40 ${c.initial}`
+              }`}>
+                {project.icon ?? project.title.charAt(0)}
               </span>
               <div className="flex flex-wrap justify-center gap-1.5 px-2">
                 {project.tech.slice(0, 4).map((t) => (
