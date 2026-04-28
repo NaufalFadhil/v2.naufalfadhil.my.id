@@ -17,7 +17,7 @@ export function MdxImage({ src, alt }: MdxImageProps) {
   return (
     <>
       <span
-        className="block my-8 rounded-xl overflow-hidden cursor-zoom-in"
+        className="block my-0 rounded-xl overflow-hidden cursor-zoom-in"
         onClick={() => { if (!closingRef.current) setOpen(true); }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
