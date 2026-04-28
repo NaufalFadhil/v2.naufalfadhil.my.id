@@ -40,7 +40,7 @@ export default function OgImage() {
           Thoughts &amp; Writing
         </div>
         <div style={{ fontSize: "24px", color: "rgba(255,255,255,0.45)", maxWidth: "700px", lineHeight: 1.5 }}>
-          Development, tools, architecture, and craft — by {siteConfig.name}.
+          {`Development, tools, architecture, and craft — by ${siteConfig.name}.`}
         </div>
         <div style={{ position: "absolute", bottom: "60px", left: "80px", color: "rgba(255,255,255,0.25)", fontSize: "18px" }}>
           {siteConfig.url.replace("https://", "")}

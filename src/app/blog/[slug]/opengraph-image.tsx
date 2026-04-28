@@ -6,16 +6,6 @@ export const runtime = "nodejs";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export async function generateImageMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = publishedPosts.find((p) => p.slug === slug);
-  return [{ id: slug, alt: post?.title ?? slug }];
-}
-
 export default async function OgImage({
   params,
 }: {
