@@ -35,7 +35,7 @@ export function FeaturedProjects() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.4, delay: i * 0.1, ease: "easeOut" }}
           >
-            <ProjectCard project={project} />
+            <ProjectCard project={project} colorIndex={i} />
           </motion.div>
         ))}
       </div>
