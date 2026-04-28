@@ -1,32 +1,38 @@
-Google Cloud has 2 type of Network Tiers. **Premium Tier** and **Standard Tier**. Maybe you want to ask, who is better between of both tiers. With see the naming convention we are know the premium is better than standard tier. **Let's see the difference between both of them**.
+**Google Cloud** has two types of Network Service Tiers: **Premium Tier** and **Standard Tier**. You may wonder which one is better between the two tiers. Based on the naming convention, we already know that Premium Tier is considered better than Standard Tier. **However, let's take a closer look at the differences between them.**.
 
 ---
+
 ## Premium Tier
 
-**Premium Tiers** deliver over **Google Network**. With this network, the premium tiers **well-provisioned, low latency, and highly reliable** with global network. This network has over 100 Network POP closed with end-user ISP arounds the world.
+**Premium Tier** traffic is delivered over **Google global network infrastructure**. This network is **well-provisioned, low-latency, and highly reliable**. Google global network includes more than 100 Points of Presence (PoPs) connected closely to end-user ISPs around the world.
 
-![Premium Tier](/blogs/premium-tier-and-standard-tier-gcloud/premium-tier.png)
+![Premium Tier](/blogs/premium-tier-and-standard-tier-gcloud/premium-network-tier.png)
 
 ---
 ## Standard Tier
 
-**Standard Tier** is new feature with offering for **lower cost**. This network tier provide network quality comparable with others public cloud provider but lower than Premium Tier by GCP provider.
+**Standard Tier** is a newer offering designed for **lower cost**. This network tier provides network quality comparable to other public cloud providers, but it generally offers **lower performance** than Google Cloud Premium Tier.
 
-![Standard Tier](/blogs/premium-tier-and-standard-tier-gcloud/standard-tier.webp)
+![Standard Tier](/blogs/premium-tier-and-standard-tier-gcloud/standard-network-tier.png)
 
-Standard tier has **complex traffic** because the traffic **not deliver through Google network** but **ISP network**.
-
----
-## Network Test
-
-I have created **2 instances** with same specification but different network tier.
-
-The **vm-premium** has minimum response time in `114ms` and **vm-standard** has minimum response time `142ms`. This ping test proof the premium network tier has better response time than standard network tier.
-
-> **Note**: The result of this test may be different because the network traffic is dynamic and the result may be different in each test.
-
-Medium Post: [Who is better? Premium Tier or Standard Tier on Network Tiers Google Cloud](https://naufal-fadhil.medium.com/cloud-who-is-better-premium-tier-or-standard-tier-on-network-tiers-google-cloud-3a7f27b1e33a)
+Standard Tier has **complex traffic routing** because the traffic is not fully delivered through Google private global network, but instead relies more on ISP networks.
 
 ---
-## Reference
+
+## Performance Comparison
+
+![Network Test](/blogs/premium-tier-and-standard-tier-gcloud/response-time-network-tier.png)
+
+I created **two instances** with the same specifications but different network tiers.
+
+The **vm-premium** instance had a minimum response time of `114 ms`, while **vm-standard** had a minimum response time of `142 ms`. This ping test proves that the Premium Tier provides better response times than the Standard Tier.
+
+> **Note**: The results of this test may vary because network traffic is dynamic, and results can differ for each test.
+
+Medium Post: [What is better? Premium Tier or Standard Tier on Network Tiers Google Cloud](https://naufal-fadhil.medium.com/cloud-who-is-better-premium-tier-or-standard-tier-on-network-tiers-google-cloud-3a7f27b1e33a)
+
+---
+
+## Article References
+
 * [Skills by Google](https://www.skills.google/)

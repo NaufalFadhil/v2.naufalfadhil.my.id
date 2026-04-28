@@ -11,15 +11,37 @@ export const imageManifest: Record<string, { widths: number[]; base: string; ext
     "base": "/blogs/premium-tier-and-standard-tier-gcloud/cover",
     "ext": ".png"
   },
-  "/blogs/premium-tier-and-standard-tier-gcloud/premium-tier.png": {
+  "/blogs/premium-tier-and-standard-tier-gcloud/premium-network-tier.png": {
     "widths": [
       480,
       768,
       960,
       1440,
-      3873
+      1774
     ],
-    "base": "/blogs/premium-tier-and-standard-tier-gcloud/premium-tier",
+    "base": "/blogs/premium-tier-and-standard-tier-gcloud/premium-network-tier",
+    "ext": ".png"
+  },
+  "/blogs/premium-tier-and-standard-tier-gcloud/response-time-network-tier.png": {
+    "widths": [
+      480,
+      768,
+      960,
+      1440,
+      1536
+    ],
+    "base": "/blogs/premium-tier-and-standard-tier-gcloud/response-time-network-tier",
+    "ext": ".png"
+  },
+  "/blogs/premium-tier-and-standard-tier-gcloud/standard-network-tier.png": {
+    "widths": [
+      480,
+      768,
+      960,
+      1440,
+      1774
+    ],
+    "base": "/blogs/premium-tier-and-standard-tier-gcloud/standard-network-tier",
     "ext": ".png"
   }
 };
