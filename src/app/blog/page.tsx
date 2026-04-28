@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, Calendar, ArrowRight } from "lucide-react";
 import { publishedPosts, categoryStyle, type BlogCategory } from "@/data/blog";
-import { ZoomableImage } from "@/components/shared/zoomable-image";
+import { OptimizedImage } from "@/components/shared/optimized-image";
 
 const cardGradients = [
   { base: "from-blue-500/8 via-card to-card border-l-blue-500/50",    hover: "hover:from-blue-500/20 hover:shadow-blue-500/10" },
@@ -110,9 +110,10 @@ export default function BlogPage() {
                 {/* Thumbnail */}
                 <div className="relative w-full aspect-[16/9] sm:w-48 sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
                   {post.coverImage ? (
-                    <ZoomableImage
+                    <OptimizedImage
                       src={post.coverImage}
                       alt={post.title}
+                      sizes="(max-width: 640px) 100vw, 192px"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (

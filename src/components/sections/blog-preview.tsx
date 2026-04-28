@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ArrowRight, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { latestPosts, categoryStyle } from "@/data/blog";
-import { ZoomableImage } from "@/components/shared/zoomable-image";
+import { OptimizedImage } from "@/components/shared/optimized-image";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
@@ -50,9 +50,10 @@ export function BlogPreview() {
               {/* Thumbnail */}
               <div className="relative w-full aspect-[16/9] sm:w-36 sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
                 {post.coverImage ? (
-                  <ZoomableImage
+                  <OptimizedImage
                     src={post.coverImage}
                     alt={post.title}
+                    sizes="(max-width: 640px) 100vw, 144px"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (
