@@ -37,7 +37,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <>
       <Card
-        className={`group flex flex-col overflow-hidden bg-gradient-to-b to-transparent shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer ${cardGradient[project.status]}`}
+        className={`group flex flex-col overflow-hidden bg-gradient-to-b to-transparent shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer h-full ${cardGradient[project.status]}`}
         onClick={() => setModalOpen(true)}
       >
         {/* Screenshot */}

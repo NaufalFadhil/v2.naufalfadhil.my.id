@@ -29,6 +29,7 @@ export function FeaturedProjects() {
         {featuredProjects.map((project, i) => (
           <motion.div
             key={project.id}
+            className="h-full"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
