@@ -79,7 +79,7 @@ export default function AboutPage() {
             Hey, I&apos;m Naufal — a builder, engineer, and occasional alien based in Indonesia. I spend most of my time turning messy ideas into working systems — from backend services in Go and Laravel to full-stack products that people actually use.
           </p>
           <p>
-            I&apos;m currently studying Informatics Engineering while building and shipping projects on the side. I don't really separate "learning" and "working" — for me, the fastest way to understand something is to build it, ship it, and see what breaks.
+            I graduated in Informatics Engineering and have been building and shipping projects ever since. I don&apos;t really separate "learning" and "working" — for me, the fastest way to understand something is to build it, ship it, and see what breaks.
           </p>
           <p>
             Lately, I&apos;ve been going deeper into AI, developer tooling, and system design — not just experimenting, but trying to build things that are genuinely useful.
