@@ -1,0 +1,303 @@
+## Introduction
+
+[Laravel](https://laravel.com/) is one of the most popular PHP frameworks for modern web development. It provides an elegant syntax, powerful built-in features, and a clean default architecture that helps developers build applications faster and more efficiently.
+
+One of Laravel's biggest strengths is its structured project layout. The framework already separates concerns clearly, making it easier to manage controllers, models, routes, views, migrations, and other application resources.
+
+However, as your project grows, the default structure can become difficult to maintain if folders are not organized properly. Many developers eventually face issues such as:
+
+* Views becoming cluttered
+* Components scattered everywhere
+* Repeated UI structures
+* Difficulty onboarding new team members
+* Confusing file navigation
+
+In this article, I'll share a practical approach to organizing Laravel project folders, especially the `resources/views` directory, to keep your application scalable, readable, and easier to maintain over time.
+
+---
+
+## Default Laravel Project Structure
+
+A typical Laravel project usually starts with a structure like this:
+
+```bash
+app/
+bootstrap/
+config/
+database/
+public/
+resources/
+routes/
+storage/
+tests/
+vendor/
+```
+
+Each folder has its own responsibility:
+
+| Folder       | Purpose                             |
+| ------------ | ----------------------------------- |
+| `app/`       | Core application logic              |
+| `config/`    | Configuration files                 |
+| `database/`  | Migrations, seeders, and factories  |
+| `public/`    | Publicly accessible assets          |
+| `resources/` | Frontend assets and Blade templates |
+| `routes/`    | Route definitions                   |
+| `storage/`   | Logs, cache, and generated files    |
+| `tests/`     | Automated tests                     |
+
+Laravel already provides a solid foundation. The challenge is maintaining consistency when the project becomes larger and more complex.
+
+---
+
+## Recommended Laravel Folder Structure
+
+Below is an example of a more organized Laravel project structure that works well for medium to large-scale applications.
+
+```tree
+app/
+├── Http/
+│   └── Controllers/
+├── Models/
+├── Providers/
+
+bootstrap/
+
+config/
+
+database/
+├── factories/
+├── migrations/
+└── seeders/
+
+public/
+├── build/
+└── templates/
+
+resources/
+├── css/
+├── js/
+└── views/
+    ├── components/
+    │   ├── dashboard/
+    │   │   ├── header.blade.php
+    │   │   ├── navigation.blade.php
+    │   │   └── script.blade.php
+    │   ├── mail/
+    │   │   ├── header.blade.php
+    │   │   ├── greeting.blade.php
+    │   │   └── footer.blade.php
+    │   ├── modal.blade.php
+    │   ├── primary-button.blade.php
+    │   └── 404.blade.php
+    │
+    ├── layouts/
+    │   ├── dashboard/
+    │   ├── landing-page/
+    │   └── authentication/
+    │
+    └── pages/
+        ├── dashboard/
+        │   ├── admin/
+        │   │   ├── dashboard/
+        │   │   ├── generate-invoice/
+        │   │   └── parameter/
+        │   │
+        │   ├── user/
+        │   │   ├── dashboard/
+        │   │   ├── exam-history/
+        │   │   └── invoice/
+        │   │
+        │   └── general/
+        │       └── invoice/
+        │
+        ├── landing-page/
+        └── authentication/
+
+routes/
+
+storage/
+├── app/
+├── framework/
+└── logs/
+
+tests/
+├── Feature/
+├── Unit/
+├── Pest.php
+└── TestCase.php
+```
+
+---
+
+## Why This Structure Works Better
+
+### 1. Better Separation of Responsibilities
+
+Instead of placing all Blade files in a single folder, this structure separates them into:
+
+* `components/`
+* `layouts/`
+* `pages/`
+
+This makes the project much easier to understand and navigate.
+
+---
+
+### 2. Reusable Components
+
+The `components/` directory is useful for reusable UI elements such as:
+
+* Headers
+* Navigation bars
+* Buttons
+* Modals
+* Alerts
+* Cards
+* Mail templates
+
+This reduces duplicated code and improves consistency across the application.
+
+Example:
+
+```blade
+<x-primary-button />
+<x-dashboard.navigation />
+```
+
+---
+
+### 3. Cleaner Layout Management
+
+The `layouts/` directory helps separate application layouts based on context.
+
+Example:
+
+```tree
+layouts/
+├── dashboard/
+├── authentication/
+└── landing-page/
+```
+
+This approach is especially useful when your application has:
+
+* Admin dashboards
+* User dashboards
+* Marketing pages
+* Authentication pages
+* Multi-role systems
+
+---
+
+### 4. More Scalable Page Organization
+
+The `pages/` folder organizes pages based on features or user roles.
+
+Example:
+
+```bash
+pages/dashboard/admin/
+pages/dashboard/user/
+pages/dashboard/general/
+```
+
+This structure scales much better than placing every Blade file directly inside a single `views/` directory.
+
+---
+
+## Tips for Structuring Laravel Views
+
+### Use Feature-Based Organization
+
+Instead of organizing files randomly, group them by feature or module.
+
+Example:
+
+```tree
+pages/
+└── dashboard/
+    └── admin/
+        ├── invoice/
+        ├── reports/
+        └── users/
+```
+
+This approach makes maintenance significantly easier.
+
+---
+
+### Avoid Deeply Nested Folders
+
+Too many nested folders can become difficult to manage.
+
+Bad example:
+
+```bash
+views/pages/dashboard/admin/settings/configuration/system/users/
+```
+
+Try to keep structures meaningful but not excessive.
+
+---
+
+### Use Consistent Naming Conventions
+
+Consistency is extremely important.
+
+Recommended practices:
+
+* Use kebab-case for folder names
+* Use descriptive names
+* Avoid mixed naming styles
+
+Good:
+
+```bash
+generate-invoice/
+exam-history/
+landing-page/
+```
+
+Avoid:
+
+```bash
+GenerateInvoice/
+examHistory/
+LandingPage/
+```
+
+---
+
+## Suggested Additional Folders
+
+Depending on your project size, you may also consider adding:
+
+| Folder          | Purpose                       |
+| --------------- | ----------------------------- |
+| `services/`     | Business logic layer          |
+| `repositories/` | Database abstraction          |
+| `helpers/`      | Helper functions              |
+| `traits/`       | Shared traits                 |
+| `actions/`      | Single-purpose action classes |
+| `DTOs/`         | Data transfer objects         |
+
+These folders are optional, but they can help keep large applications more maintainable.
+
+---
+
+## Final Thoughts
+
+A clean folder structure is not just about aesthetics — it directly impacts maintainability, scalability, and team collaboration.
+
+Laravel already provides an excellent foundation, but creating a consistent project structure on top of it can dramatically improve development experience as your application grows.
+
+There is no single “perfect” structure for every project. The best approach is the one that:
+
+* Keeps files easy to find
+* Encourages reusability
+* Reduces duplication
+* Scales well over time
+* Makes collaboration easier for your team
+
+As your project evolves, don't hesitate to refine your folder organization to better match your application architecture and workflow.
