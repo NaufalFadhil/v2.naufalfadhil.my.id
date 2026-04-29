@@ -1,4 +1,15 @@
-export type BlogCategory = "Tech" | "TIL" | "Books" | "Research" | "Career" | "Opinion";
+export type BlogCategory =
+  | "Tech"
+  | "TIL"
+  | "Books"
+  | "Research"
+  | "Career"
+  | "Opinion"
+  | "Thought"
+  | "Product"
+  | "Story"
+  | "Politics"
+  | "Stock";
 
 export type BlogPost = {
   id: string;
@@ -8,7 +19,7 @@ export type BlogPost = {
   coverImage?: string;
   date: string;
   readTime: number;
-  category: BlogCategory;
+  categories: BlogCategory[];
   tags: string[];
   published: boolean;
 };
@@ -20,6 +31,11 @@ export const categoryStyle: Record<BlogCategory, { label: string; className: str
   Research: { label: "Research",className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30" },
   Career:   { label: "Career",  className: "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30" },
   Opinion:  { label: "Opinion", className: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30" },
+  Thought:  { label: "Thought", className: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30" },
+  Product:  { label: "Product", className: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30" },
+  Story:    { label: "Story",   className: "bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/30" },
+  Politics: { label: "Politics",className: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30" },
+  Stock:    { label: "Stock",   className: "bg-lime-500/10 text-lime-600 dark:text-lime-400 border-lime-500/30" },
 };
 
 export const blogPosts: BlogPost[] = [
@@ -32,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "https://picsum.photos/seed/go-cli/1200/630",
     date: "2024-11-15",
     readTime: 8,
-    category: "Tech",
+    categories: ["Tech"],
     tags: ["Go", "CLI", "DevTools"],
     published: false,
   },
@@ -45,7 +61,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "https://picsum.photos/seed/nextjs-app/1200/630",
     date: "2024-10-02",
     readTime: 12,
-    category: "Tech",
+    categories: ["Tech"],
     tags: ["Next.js", "React", "Architecture"],
     published: false,
   },
@@ -58,7 +74,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "https://picsum.photos/seed/postgres-db/1200/630",
     date: "2024-08-20",
     readTime: 10,
-    category: "TIL",
+    categories: ["TIL"],
     tags: ["PostgreSQL", "Database", "Performance"],
     published: false,
   },
@@ -71,7 +87,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "https://picsum.photos/seed/docker-dev/1200/630",
     date: "2024-07-05",
     readTime: 15,
-    category: "Tech",
+    categories: ["Tech"],
     tags: ["Docker", "DevOps"],
     published: false,
   },
@@ -83,7 +99,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "/blogs/premium-tier-and-standard-tier-gcloud/cover.png",
     date: "2024-06-16",
     readTime: 2,
-    category: "Tech",
+    categories: ["Tech"],
     tags: ["Google Cloud", "Networking", "Cloud Services", "Infrastructure"],
     published: true,
   },

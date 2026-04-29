@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const allTags = Array.from(new Set(publishedPosts.flatMap((p) => p.tags))).sort();
-const allCategories = Array.from(new Set(publishedPosts.map((p) => p.category))) as BlogCategory[];
+const allCategories = Array.from(new Set(publishedPosts.flatMap((p) => p.categories))) as BlogCategory[];
 
 export default function BlogPage() {
   const PAGE_SIZE = 10;
@@ -38,7 +38,7 @@ export default function BlogPage() {
         p.title.toLowerCase().includes(search.toLowerCase()) ||
         p.excerpt.toLowerCase().includes(search.toLowerCase());
       const matchesTag = !activeTag || p.tags.includes(activeTag);
-      const matchesCategory = !activeCategory || p.category === activeCategory;
+      const matchesCategory = !activeCategory || p.categories.includes(activeCategory);
       return matchesSearch && matchesTag && matchesCategory;
     });
   }, [search, activeTag, activeCategory]);
@@ -129,9 +129,11 @@ export default function BlogPage() {
                 <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                   <div>
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
-                        {categoryStyle[post.category].label}
-                      </span>
+                      {post.categories.map((cat) => (
+                        <span key={cat} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
+                          {categoryStyle[cat].label}
+                        </span>
+                      ))}
                       {post.tags.map((tag) => (
                         <span key={tag} className="rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/70">
                           {tag}

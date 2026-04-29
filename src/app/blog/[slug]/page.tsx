@@ -121,9 +121,11 @@ export default async function BlogPostPage({ params }: Props) {
         <article className="min-w-0 max-w-2xl">
           <header className="mb-8">
             <div className="flex flex-wrap items-center gap-1.5 mb-4">
-              <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
-                {categoryStyle[post.category].label}
-              </span>
+              {post.categories.map((cat) => (
+                <span key={cat} className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
+                  {categoryStyle[cat].label}
+                </span>
+              ))}
               {post.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="text-xs font-normal">
                   {tag}

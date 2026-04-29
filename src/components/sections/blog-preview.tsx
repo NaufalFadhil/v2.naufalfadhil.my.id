@@ -69,9 +69,11 @@ export function BlogPreview() {
               <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[post.category].className}`}>
-                      {categoryStyle[post.category].label}
-                    </span>
+                    {post.categories.map((cat) => (
+                      <span key={cat} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
+                        {categoryStyle[cat].label}
+                      </span>
+                    ))}
                     {post.tags.slice(0, 2).map((tag) => (
                       <span key={tag} className="rounded-full border border-border bg-background/60 px-2.5 py-0.5 text-xs text-foreground/70">
                         {tag}

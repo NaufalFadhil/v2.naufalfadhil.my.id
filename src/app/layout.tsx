@@ -80,6 +80,7 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
+          scriptProps={{ suppressHydrationWarning: true }}
         >
           <CursorGlow />
           <RootClient>{children}</RootClient>
