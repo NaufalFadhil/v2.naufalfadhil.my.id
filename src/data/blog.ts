@@ -93,10 +93,10 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "5",
-    slug: "premium-tier-and-standard-tier-gcloud",
+    slug: "2024-06-premium-tier-and-standard-tier-gcloud",
     title: "What Is Better? Premium Tier vs. Standard Tier on Network Service Tiers in Google Cloud",
     excerpt: "A detailed comparison of Google Cloud's Premium Tier and Standard Tier network service tiers, covering performance, pricing, and use cases to help you choose the right option for your workloads.",
-    coverImage: "/blogs/premium-tier-and-standard-tier-gcloud/cover.png",
+    coverImage: "/blogs/2024-06-premium-tier-and-standard-tier-gcloud/cover.png",
     date: "2024-06-16",
     readTime: 2,
     categories: ["Tech"],
