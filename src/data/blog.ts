@@ -129,8 +129,7 @@ export const blogPosts: BlogPost[] = [
     tags: ["Laravel", "PHP", "Architecture"],
     published: true,
   },
-  ,
-    {
+  {
     id: "8",
     slug: "2024-12-experience-enterprise-system",
     title: "My Experience Joining an Enterprise System as an Associate Software Engineer",
