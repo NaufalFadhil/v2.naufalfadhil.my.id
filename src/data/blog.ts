@@ -127,6 +127,19 @@ export const blogPosts: BlogPost[] = [
     tags: ["Laravel", "PHP", "Architecture"],
     published: true,
   },
+  ,
+    {
+    id: "8",
+    slug: "2024-12-experience-enterprise-system",
+    title: "My Experience Joining an Enterprise System as an Associate Software Engineer",
+    excerpt: "A personal account of my journey joining an enterprise system as an Associate Software Engineer, the challenges I faced, and the lessons I learned along the way.",
+    coverImage: "/blogs/2024-12-experience-enterprise-system/cover.png",
+    date: "2024-12-01",
+    readTime: 2,
+    categories: ["Career", "Story"],
+    tags: ["Career", "Experience", "Software Engineering"],
+    published: true,
+  },
 ];
 
 export const publishedPosts = blogPosts
