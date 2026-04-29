@@ -109,7 +109,7 @@ export const blogPosts: BlogPost[] = [
     title: "How I Made a Profit Using AI for Stock Market Analysis",
     excerpt: "A personal story of how I leveraged AI tools to analyze stock market trends and make profitable investment decisions in 2026.",
     coverImage: "/blogs/2026-04-stock-market-analysis-story/cover.png",
-    date: "2024-06-16",
+    date: "2026-04-29",
     readTime: 2,
     categories: ["Stock", "Story"],
     tags: ["AI", "Stock Market", "Investment"],
@@ -117,5 +117,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const publishedPosts = blogPosts.filter((p) => p.published);
+export const publishedPosts = blogPosts
+  .filter((p) => p.published)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 export const latestPosts = publishedPosts.slice(0, 3);

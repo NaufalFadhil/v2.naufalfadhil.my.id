@@ -148,11 +148,11 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           {post.coverImage && (
-            <div className="relative w-full aspect-video mb-10 rounded-xl overflow-hidden border border-border">
+            <div className="w-full mb-10 rounded-xl overflow-hidden border border-border">
               <ZoomableImage
                 src={post.coverImage}
                 alt={post.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="w-full h-auto"
               />
             </div>
           )}
