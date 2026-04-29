@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Pin, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { latestPosts, categoryStyle } from "@/data/blog";
 import { OptimizedImage } from "@/components/shared/optimized-image";
@@ -69,6 +69,18 @@ export function BlogPreview() {
               <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-2">
+                    {post.pinned && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
+                        <Pin className="h-2.5 w-2.5" />
+                        Pinned
+                      </span>
+                    )}
+                    {post.featured && !post.pinned && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-yellow-500/40 bg-yellow-500/10 px-2 py-0.5 text-xs font-semibold text-yellow-600 dark:text-yellow-400">
+                        <Star className="h-2.5 w-2.5" />
+                        Featured
+                      </span>
+                    )}
                     {post.categories.map((cat) => (
                       <span key={cat} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
                         {categoryStyle[cat].label}

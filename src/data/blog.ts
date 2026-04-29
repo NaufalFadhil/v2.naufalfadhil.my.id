@@ -22,6 +22,8 @@ export type BlogPost = {
   categories: BlogCategory[];
   tags: string[];
   published: boolean;
+  featured?: boolean;
+  pinned?: boolean;
 };
 
 export const categoryStyle: Record<BlogCategory, { label: string; className: string }> = {
@@ -139,10 +141,21 @@ export const blogPosts: BlogPost[] = [
     categories: ["Career", "Story"],
     tags: ["Career", "Experience", "Software Engineering"],
     published: true,
+    featured: true,
+    pinned: true,
   },
 ];
 
 export const publishedPosts = blogPosts
   .filter((p) => p.published)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-export const latestPosts = publishedPosts.slice(0, 3);
+
+export const pinnedPosts = publishedPosts.filter((p) => p.pinned);
+export const featuredPosts = publishedPosts.filter((p) => p.featured);
+
+const previewCandidates = [
+  ...publishedPosts.filter((p) => p.pinned),
+  ...publishedPosts.filter((p) => p.featured && !p.pinned),
+  ...publishedPosts.filter((p) => !p.pinned && !p.featured),
+];
+export const latestPosts = Array.from(new Map(previewCandidates.map((p) => [p.id, p])).values()).slice(0, 3);
