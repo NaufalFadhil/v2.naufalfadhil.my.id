@@ -16,10 +16,12 @@ export default async function OgImage({
 
   const title = post?.title ?? "Blog Post";
   const excerpt = post?.excerpt ?? "";
-  const category = post?.category ?? "tech";
+  const categories = post?.categories ?? [];
   const tags = post?.tags?.slice(0, 3) ?? [];
 
-  const categoryLabel = categoryStyle[category as keyof typeof categoryStyle]?.label ?? category;
+  const categoryLabel = categories
+    .map((cat) => categoryStyle[cat]?.label ?? cat)
+    .join(", ");
 
   return new ImageResponse(
     (
