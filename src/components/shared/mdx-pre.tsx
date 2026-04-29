@@ -3,10 +3,26 @@
 import { useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TreeBlock } from "./tree-block";
 
 export function MdxPre({ children, className, style, ...props }: React.HTMLAttributes<HTMLPreElement>) {
   const preRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
+
+  const attrs = props as Record<string, unknown>;
+  const language = attrs["data-language"] as string | undefined;
+  const rawCode = attrs["data-raw-code"] as string | undefined;
+
+  if (language === "tree" && rawCode != null) {
+    return (
+      <div className="relative group/pre my-6 not-prose">
+        <div data-code-header="" />
+        <div className="overflow-x-auto rounded-b-xl border border-[#444c56] bg-[#22272e] px-5 py-4">
+          <TreeBlock code={rawCode} />
+        </div>
+      </div>
+    );
+  }
 
   const handleCopy = async () => {
     const text = preRef.current?.textContent ?? "";
@@ -24,7 +40,7 @@ export function MdxPre({ children, className, style, ...props }: React.HTMLAttri
           style={style}
           className={cn(
             // default styling — shiki inline `style` bg will override the Tailwind bg class
-            "overflow-x-auto rounded-b-xl border border-[#444c56] bg-[#22272e] p-5 text-sm leading-relaxed text-[#adbac7]",
+            "overflow-x-auto rounded-b-xl border border-[#444c56] bg-[#22272e] p-5 text-sm leading-normal text-[#adbac7]",
             className,
           )}
           {...props}

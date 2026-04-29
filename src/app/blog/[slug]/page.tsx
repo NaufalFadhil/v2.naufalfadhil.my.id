@@ -5,6 +5,8 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
+import { visit } from "unist-util-visit";
+import type { Element } from "hast";
 import { publishedPosts, categoryStyle } from "@/data/blog";
 import { getBlogContent, extractHeadings, slugifyHeading } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
@@ -33,6 +35,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+type HastNode = { type: string; value?: string; children?: HastNode[] };
+
+function getAllText(node: HastNode): string {
+  if (node.type === "text") return node.value ?? "";
+  return (node.children ?? []).map(getAllText).join("");
+}
+
+function rehypeRawCode() {
+  return (tree: unknown) => {
+    visit(tree as Parameters<typeof visit>[0], "element", (node: Element) => {
+      if (node.tagName !== "pre") return;
+      node.properties["data-raw-code"] = getAllText(node as unknown as HastNode);
+    });
+  };
+}
+
 const mdxOptions = {
   mdxOptions: {
     remarkPlugins: [remarkGfm],
@@ -41,6 +59,7 @@ const mdxOptions = {
         rehypePrettyCode,
         { theme: "github-dark-dimmed", keepBackground: true },
       ],
+      rehypeRawCode,
     ] as never[],
   },
 };

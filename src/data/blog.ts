@@ -115,6 +115,18 @@ export const blogPosts: BlogPost[] = [
     tags: ["AI", "Stock Market", "Investment"],
     published: true,
   },
+    {
+    id: "7",
+    slug: "2024-11-best-laravel-project-structure",
+    title: "Laravel Project Structure Best Practices: Organizing Your Folders for Scalability",
+    excerpt: "A practical guide to organizing Laravel folders for cleaner, scalable, and maintainable projects.",
+    coverImage: "/blogs/2024-11-best-laravel-project-structure/cover.png",
+    date: "2024-11-30",
+    readTime: 2,
+    categories: ["Tech"],
+    tags: ["Laravel", "PHP", "Architecture"],
+    published: true,
+  },
 ];
 
 export const publishedPosts = blogPosts
