@@ -1,0 +1,699 @@
+So, you just bought a VPS.
+
+Maybe it's running Ubuntu, maybe Debian, maybe you only use it for personal projects, APIs, bots, or self-hosted applications.
+
+But here's the problem:
+
+The moment your VPS becomes publicly accessible on the internet, automated bots immediately start scanning it.
+
+And yes — this happens even if your server is "empty".
+
+Many beginners deploy a VPS and leave everything in its default configuration:
+
+- default SSH port
+- root login enabled
+- password authentication enabled
+- firewall disabled
+- outdated packages
+
+This is one of the most common beginner mistakes in server administration.
+
+In this guide, I'll walk you through the **first security setup** I usually apply on a fresh VPS machine. These are simple but highly impactful improvements that significantly reduce unnecessary risks.
+
+> **Important:**  
+> Please follow the steps carefully and in order.  
+> Skipping certain steps — especially around SSH access — can accidentally lock you out of your own server.
+
+---
+
+## Step 1 — Update Your VPS
+
+Before installing anything, always update your system packages.
+
+This ensures your VPS receives:
+
+- latest security patches
+- bug fixes
+- dependency updates
+
+Run:
+
+```bash
+sudo apt update
+```
+
+Then:
+
+```bash
+sudo apt upgrade
+```
+
+You can also upgrade packages automatically without prompts:
+
+```bash
+sudo apt upgrade -y
+```
+
+Keeping your server updated is one of the most basic yet essential security practices.
+
+---
+
+## Step 2 — Don't Use the Default SSH Port (22)
+
+By default, SSH runs on port `22`.
+
+Attackers know this.
+
+Most automated bots and scanners will first attempt to attack port `22` because it is the standard SSH port on almost every Linux server.
+
+Changing the SSH port will **not magically secure your VPS**, but it helps reduce:
+
+- automated scans
+- noisy brute-force attempts
+- low-effort attacks
+
+Think of this as reducing visibility, not replacing real security.
+
+---
+
+### Step 2.1 — Edit SSH Configuration
+
+Open the SSH configuration file:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Find:
+
+```bash
+Port 22
+```
+
+Change it to another port.
+
+Example:
+
+```bash
+Port 2222
+```
+
+You can use almost any unused port you want.
+
+Save the file afterward.
+
+---
+
+### Step 2.2 — Restart SSH Service
+
+Apply the changes:
+
+```bash
+sudo systemctl restart sshd
+```
+
+If no error appears, the configuration was applied successfully.
+
+---
+
+### Step 2.3 — Test the New SSH Port
+
+Before closing your current terminal session, open another terminal and test the new port:
+
+```bash
+ssh your_username@your_ip_address -p 2222
+```
+
+Example:
+
+```bash
+ssh root@101.101.101.101 -p 2222
+```
+
+If you can log in successfully, congratulations — your SSH port has changed correctly.
+
+> **Never close your existing SSH session before testing the new one.**
+
+---
+
+## Step 3 — Create a New Linux User
+
+Using `root` for daily server activities is dangerous.
+
+If someone gains access to your root account, they instantly gain full control over the server.
+
+Instead, create a normal user and give it `sudo` privileges.
+
+This step is extremely important because later we will disable direct root login.
+
+---
+
+### Step 3.1 — Create a New User
+
+Run:
+
+```bash
+adduser <your-username>
+```
+
+Example:
+
+```bash
+adduser johndoe
+```
+
+Linux will ask for:
+
+- password
+- full name
+- additional optional information
+
+After the process finishes, switch into the new user:
+
+```bash
+su - johndoe
+```
+
+Explanation:
+
+```bash
+su
+```
+
+means:
+
+> substitute user / switch user
+
+---
+
+### Step 3.2 — Add User to Sudo Group
+
+Now give the user administrator privileges.
+
+Switch back to root if needed:
+
+```bash
+exit
+```
+
+Then run:
+
+```bash
+usermod -aG sudo johndoe
+```
+
+This command adds `johndoe` into the `sudo` group.
+
+---
+
+### Step 3.3 — Verify Sudo Access
+
+Switch back into the user:
+
+```bash
+su - johndoe
+```
+
+Check groups:
+
+```bash
+groups
+```
+
+You should see something like:
+
+```bash
+johndoe sudo
+```
+
+That means the account already has administrator privileges.
+
+---
+
+## Step 4 — Disable Root Login
+
+Now that your new user is ready, it's time to disable direct root login.
+
+This is one of the most important security improvements for a VPS.
+
+---
+
+### Important — Test Your New User First
+
+Before disabling root login, make sure you can log in using the new account.
+
+Open another terminal and test:
+
+```bash
+ssh johndoe@your_ip_address -p 2222
+```
+
+If login works correctly, continue.
+
+If not, stop here and fix the issue first.
+
+---
+
+### Step 4.1 — Edit SSH Configuration Again
+
+Open:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Find:
+
+```bash
+PermitRootLogin yes
+```
+
+Change it to:
+
+```bash
+PermitRootLogin no
+```
+
+Save the file.
+
+---
+
+### Step 4.2 — Restart SSH
+
+Apply changes:
+
+```bash
+sudo systemctl restart sshd
+```
+
+Now root login is disabled.
+
+This means the following command will no longer work:
+
+```bash
+ssh root@your_ip_address
+```
+
+You must use your normal user account instead:
+
+```bash
+ssh johndoe@your_ip_address -p 2222
+```
+
+---
+
+## Step 5 — Enable Firewall (UFW)
+
+A firewall helps control which ports are publicly accessible.
+
+Without a firewall, every open service on your VPS becomes reachable from the internet.
+
+Ubuntu provides a simple firewall tool called:
+
+```bash
+ufw
+```
+
+(UFW = Uncomplicated Firewall)
+
+---
+
+### Step 5.1 — Check Firewall Status
+
+Run:
+
+```bash
+sudo ufw status
+```
+
+Example output:
+
+```bash
+Status: inactive
+```
+
+or:
+
+```bash
+Status: active
+```
+
+---
+
+### Step 5.2 — Allow Your SSH Port First
+
+Before enabling the firewall, you **must allow your SSH port**.
+
+Otherwise, you may lock yourself out of the server.
+
+Example for port `2222`:
+
+```bash
+sudo ufw allow 2222
+```
+
+This step is extremely important.
+
+---
+
+### Step 5.3 — Enable Firewall
+
+Now enable UFW:
+
+```bash
+sudo ufw enable
+```
+
+Check status again:
+
+```bash
+sudo ufw status
+```
+
+Example:
+
+```bash
+2222/tcp ALLOW Anywhere
+2222/tcp (v6) ALLOW Anywhere (v6)
+```
+
+Your SSH access is now protected by the firewall.
+
+---
+
+### Allow HTTP and HTTPS Ports
+
+If you run a website using Nginx or Apache, allow ports `80` and `443`.
+
+#### HTTP
+
+```bash
+sudo ufw allow 80
+```
+
+or:
+
+```bash
+sudo ufw allow http
+```
+
+#### HTTPS
+
+```bash
+sudo ufw allow 443
+```
+
+or:
+
+```bash
+sudo ufw allow https
+```
+
+---
+
+## Optional Step — Disable Password Login and Use SSH Keys
+
+This is one of the **highest-impact security improvements** you can make on a VPS.
+
+Instead of logging in using passwords, you authenticate using cryptographic SSH keys.
+
+### Why Is This Better?
+
+Because passwords can be:
+
+- guessed
+- brute-forced
+- leaked
+- reused
+- phished
+
+SSH keys are significantly harder to compromise.
+
+For modern servers, SSH key authentication should be considered a baseline security standard.
+
+---
+
+### Step A.1 — Generate SSH Key
+
+On your local machine:
+
+```bash
+ssh-keygen
+```
+
+Modern recommendation:
+
+```bash
+ssh-keygen -t ed25519
+```
+
+You will see:
+
+```bash
+Generating public/private ed25519 key pair.
+```
+
+Press Enter to use the default location.
+
+You may also set a passphrase for additional protection.
+
+If successful:
+
+```bash
+Your identification has been saved in ~/.ssh/id_ed25519
+Your public key has been saved in ~/.ssh/id_ed25519.pub
+```
+
+---
+
+### Understanding SSH Key Files
+
+Inside your `.ssh` folder:
+
+```bash
+~/.ssh/id_ed25519
+~/.ssh/id_ed25519.pub
+```
+
+| File | Description ||
+|---|---|
+| `id_ed25519` | Your **private key**. Keep this secret and never share it publicly. |
+| `id_ed25519.pub` | Your **public key**. This key can be safely shared with your VPS/server. |
+
+#### Private Key
+
+```bash
+id_ed25519
+```
+
+This is your secret key.
+
+- Never share it
+- Never upload it publicly
+- Treat it like a password
+
+---
+
+#### Public Key
+
+```bash
+id_ed25519.pub
+```
+
+This key is safe to share with servers.
+
+Your VPS uses this key to verify your identity.
+
+---
+
+### Step A.2 — Copy Public Key to VPS
+
+Run:
+
+```bash
+ssh-copy-id user@your-server-ip
+```
+
+Example:
+
+```bash
+ssh-copy-id johndoe@192.168.1.10
+```
+
+This command automatically appends your public key into:
+
+```bash
+~/.ssh/authorized_keys
+```
+
+Now your VPS recognizes your machine as trusted.
+
+---
+
+### Step A.3 — Test SSH Key Login
+
+Before disabling password authentication, test the SSH key first.
+
+Run:
+
+```bash
+ssh johndoe@your-server-ip
+```
+
+If successful:
+
+- you should log in without entering the server password
+- you may only need your SSH key passphrase
+
+> **Never skip this test.**  
+> Disabling passwords before verifying SSH keys can permanently lock you out of the server.
+
+---
+
+### Step A.4 — Disable Password Authentication
+
+Open SSH configuration:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Find:
+
+```bash
+PasswordAuthentication yes
+```
+
+Change it to:
+
+```bash
+PasswordAuthentication no
+```
+
+You can also ensure these settings exist:
+
+```bash
+PermitRootLogin no
+PubkeyAuthentication yes
+ChallengeResponseAuthentication no
+```
+
+Save the file.
+
+---
+
+### Step A.5 — Restart SSH Service
+
+Apply changes:
+
+```bash
+sudo systemctl restart ssh
+```
+
+Or on some systems:
+
+```bash
+sudo systemctl restart sshd
+```
+
+---
+
+## Why This Matters
+
+The moment your VPS becomes public, bots immediately begin scanning it.
+
+Many attackers continuously attempt:
+
+- weak passwords
+- leaked credentials
+- common usernames
+- brute-force attacks
+
+A password-authenticated SSH server is constantly exposed to these attacks.
+
+SSH keys dramatically reduce this attack surface because:
+
+- attackers cannot simply guess the key
+- modern cryptography is computationally impractical to brute-force
+- password authentication is completely disabled
+
+This is why SSH keys are considered the industry standard for secure server access.
+
+---
+
+## Extra Tips
+
+### Use Ed25519 Instead of RSA
+
+Recommended:
+
+```bash
+ssh-keygen -t ed25519
+```
+
+Benefits:
+
+- smaller keys
+- faster authentication
+- stronger modern cryptography
+
+---
+
+### Install Fail2Ban
+
+Fail2Ban automatically blocks repeated failed login attempts.
+
+Install:
+
+```bash
+sudo apt install fail2ban
+```
+
+Check status:
+
+```bash
+sudo systemctl status fail2ban
+```
+
+This adds another layer of protection against brute-force attacks.
+
+---
+
+### Keep Your VPS Updated
+
+Security is not a "one-time setup".
+
+Always keep your system updated regularly:
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+An outdated server is one of the easiest targets for attackers.
+
+---
+
+## Final Thoughts
+
+Security is not about making your VPS "unhackable".
+
+That's impossible.
+
+The goal is to:
+
+- reduce attack surfaces
+- prevent common mistakes
+- make attacks significantly harder
+- avoid becoming an easy target
+
+Even simple improvements like:
+
+- changing the SSH port
+- disabling root login
+- enabling a firewall
+- using SSH keys
+
+already make your VPS far more secure than many publicly exposed servers on the internet.
+
+For a fresh VPS setup, these steps should be considered the minimum baseline before deploying any production application.
+

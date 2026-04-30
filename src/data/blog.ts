@@ -158,6 +158,19 @@ export const blogPosts: BlogPost[] = [
     featured: true,
     pinned: true,
   },
+  {
+    id: "9",
+    slug: "2026-04-first-security-setup-vps",
+    title: "First Security Setup on Your VPS: A Step-by-Step Guide",
+    excerpt:
+      "A comprehensive guide to securing your VPS for the first time, covering firewall configuration, SSH hardening, and best practices to protect your server from common threats.",
+    coverImage: "/blogs/2026-04-first-security-setup-vps/cover.png",
+    date: "2026-04-20",
+    readTime: 10,
+    categories: ["Tech"],
+    tags: ["Linux", "Security", "DevSecOps", "Cyber Security", "Infrastructure", "Cloud", "Best Practices"],
+    published: true,
+  },
 ];
 
 // ─── Blog Card Gradients ─────────────────────────────────────────────────────
