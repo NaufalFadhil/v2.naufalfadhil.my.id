@@ -2,12 +2,15 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, Calendar, ArrowRight, Pin, Star } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import { publishedPosts, categoryStyle, blogCardGradients, getPostPriority, type BlogCategory } from "@/data/blog";
-import { formatDate, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/shared/optimized-image";
+import { FilterTagButton } from "@/components/shared/filter-tag-button";
+import { EmptyState } from "@/components/shared/empty-state";
+import { PostCardMeta } from "@/components/shared/post-card-meta";
 
 const PAGE_SIZE = 10;
 
@@ -66,7 +69,9 @@ export default function BlogPage() {
               onClick={() => setActiveCategory(isActive ? null : cat)}
               className={cn(
                 "rounded-full border px-3 py-1 text-xs font-semibold transition-all",
-                isActive ? style.className + " ring-1 ring-offset-1" : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
+                isActive
+                  ? style.className + " ring-1 ring-offset-1"
+                  : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
               )}
             >
               {style.label}
@@ -78,18 +83,12 @@ export default function BlogPage() {
       {/* Tag filter */}
       <div className="flex flex-wrap gap-2 mb-8">
         {allTags.map((tag) => (
-          <button
+          <FilterTagButton
             key={tag}
+            label={tag}
+            active={activeTag === tag}
             onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs transition-colors",
-              activeTag === tag
-                ? "border-foreground bg-foreground text-background font-medium"
-                : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
-            )}
-          >
-            {tag}
-          </button>
+          />
         ))}
       </div>
 
@@ -102,7 +101,11 @@ export default function BlogPage() {
               <article key={post.id}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className={`group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${gradient.base} shadow-sm transition-all duration-300 hover:shadow-md ${gradient.hover} p-4 overflow-hidden`}
+                  className={cn(
+                    "group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
+                    gradient.base,
+                    gradient.hover
+                  )}
                 >
                   {/* Thumbnail */}
                   <div className="relative w-full aspect-[16/9] sm:w-48 sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
@@ -125,35 +128,7 @@ export default function BlogPage() {
                   {/* Text */}
                   <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                     <div>
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        {post.pinned && (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
-                            <Pin className="h-2.5 w-2.5" />
-                            Pinned
-                          </span>
-                        )}
-                        {post.featured && !post.pinned && (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-yellow-500/40 bg-yellow-500/10 px-2 py-0.5 text-xs font-semibold text-yellow-600 dark:text-yellow-400">
-                            <Star className="h-2.5 w-2.5" />
-                            Featured
-                          </span>
-                        )}
-                        {post.categories.map((cat) => (
-                          <span key={cat} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
-                            {categoryStyle[cat].label}
-                          </span>
-                        ))}
-                        {post.tags.map((tag) => (
-                          <span key={tag} className="rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-xs text-foreground/70">
-                            {tag}
-                          </span>
-                        ))}
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <span className="text-muted-foreground/40">•</span>
-                          <Calendar className="h-3 w-3" />
-                          {formatDate(post.date)}
-                        </span>
-                      </div>
+                      <PostCardMeta post={post} />
                       <h2 className="font-semibold text-base leading-snug mb-2 group-hover:text-foreground/75 transition-colors line-clamp-2">
                         {post.title}
                       </h2>
@@ -180,15 +155,10 @@ export default function BlogPage() {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground text-sm">No posts match your search.</p>
-          <button
-            onClick={() => { setSearch(""); setActiveTag(null); setActiveCategory(null); }}
-            className="mt-3 text-xs text-foreground underline"
-          >
-            Clear filters
-          </button>
-        </div>
+        <EmptyState
+          message="No posts match your search."
+          onClear={() => { setSearch(""); setActiveTag(null); setActiveCategory(null); }}
+        />
       )}
     </Container>
   );

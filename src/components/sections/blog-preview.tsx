@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calendar, Pin, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { latestPosts, categoryStyle, blogCardGradients } from "@/data/blog";
-import { formatDate } from "@/lib/utils";
+import { latestPosts, blogCardGradients } from "@/data/blog";
+import { cn } from "@/lib/utils";
 import { OptimizedImage } from "@/components/shared/optimized-image";
 import { SectionHeader } from "@/components/shared/section-header";
+import { PostCardMeta } from "@/components/shared/post-card-meta";
 import { Button } from "@/components/ui/button";
 
 export function BlogPreview() {
@@ -39,7 +40,11 @@ export function BlogPreview() {
             >
               <Link
                 href={`/blog/${post.slug}`}
-                className={`group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r ${gradient.base} shadow-sm transition-all duration-300 hover:shadow-md ${gradient.hover} p-4 overflow-hidden`}
+                className={cn(
+                  "group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
+                  gradient.base,
+                  gradient.hover
+                )}
               >
                 {/* Thumbnail */}
                 <div className="relative w-full aspect-[16/9] sm:w-36 sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden bg-muted">
@@ -62,35 +67,7 @@ export function BlogPreview() {
                 {/* Text */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                   <div>
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      {post.pinned && (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
-                          <Pin className="h-2.5 w-2.5" />
-                          Pinned
-                        </span>
-                      )}
-                      {post.featured && !post.pinned && (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-yellow-500/40 bg-yellow-500/10 px-2 py-0.5 text-xs font-semibold text-yellow-600 dark:text-yellow-400">
-                          <Star className="h-2.5 w-2.5" />
-                          Featured
-                        </span>
-                      )}
-                      {post.categories.map((cat) => (
-                        <span key={cat} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
-                          {categoryStyle[cat].label}
-                        </span>
-                      ))}
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="rounded-full border border-border bg-background/60 px-2.5 py-0.5 text-xs text-foreground/70">
-                          {tag}
-                        </span>
-                      ))}
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <span className="text-muted-foreground/40">•</span>
-                        <Calendar className="h-3 w-3" />
-                        {formatDate(post.date)}
-                      </span>
-                    </div>
+                    <PostCardMeta post={post} maxTags={2} />
                     <h3 className="font-semibold text-base leading-snug mb-1.5 group-hover:text-foreground/75 transition-colors line-clamp-2">
                       {post.title}
                     </h3>

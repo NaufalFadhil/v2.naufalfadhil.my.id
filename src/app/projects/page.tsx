@@ -3,18 +3,28 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { publishedProjects as projects } from "@/data/projects";
+import { cn } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
 import { ProjectCard } from "@/components/shared/project-card";
-import { cn } from "@/lib/utils";
+import { FilterTagButton } from "@/components/shared/filter-tag-button";
+import { EmptyState } from "@/components/shared/empty-state";
 
 const allTags = Array.from(new Set(projects.flatMap((p) => p.tags))).sort();
 const statusFilters = ["all", "in-progress", "completed", "archived"] as const;
 
+type Status = (typeof statusFilters)[number];
+
+function formatStatus(status: Status): string {
+  if (status === "all") return "All";
+  if (status === "in-progress") return "In Progress";
+  return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [activeStatus, setActiveStatus] = useState<string>("all");
+  const [activeStatus, setActiveStatus] = useState<Status>("all");
 
   const filtered = useMemo(() => {
     return projects
@@ -24,10 +34,8 @@ export default function ProjectsPage() {
           p.title.toLowerCase().includes(search.toLowerCase()) ||
           p.description.toLowerCase().includes(search.toLowerCase()) ||
           p.tech.some((t) => t.toLowerCase().includes(search.toLowerCase()));
-
         const matchesTag = !activeTag || p.tags.includes(activeTag);
         const matchesStatus = activeStatus === "all" || p.status === activeStatus;
-
         return matchesSearch && matchesTag && matchesStatus;
       })
       .sort((a, b) => {
@@ -68,7 +76,7 @@ export default function ProjectsPage() {
                 : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
             )}
           >
-            {s === "all" ? "All" : s === "in-progress" ? "In Progress" : s.charAt(0).toUpperCase() + s.slice(1)}
+            {formatStatus(s)}
           </button>
         ))}
       </div>
@@ -76,27 +84,19 @@ export default function ProjectsPage() {
       {/* Tag filter */}
       <div className="flex flex-wrap gap-2 mb-8">
         {allTags.map((tag) => (
-          <button
+          <FilterTagButton
             key={tag}
+            label={tag}
+            active={activeTag === tag}
             onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs transition-colors",
-              activeTag === tag
-                ? "border-foreground bg-foreground text-background font-medium"
-                : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
-            )}
-          >
-            {tag}
-          </button>
+          />
         ))}
       </div>
 
-      {/* Results count */}
       <p className="text-xs text-muted-foreground mb-5">
         {filtered.length} project{filtered.length !== 1 ? "s" : ""}
       </p>
 
-      {/* Grid */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((project, i) => (
@@ -104,15 +104,10 @@ export default function ProjectsPage() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground text-sm">No projects match your filters.</p>
-          <button
-            onClick={() => { setSearch(""); setActiveTag(null); setActiveStatus("all"); }}
-            className="mt-3 text-xs text-foreground underline"
-          >
-            Clear filters
-          </button>
-        </div>
+        <EmptyState
+          message="No projects match your filters."
+          onClear={() => { setSearch(""); setActiveTag(null); setActiveStatus("all"); }}
+        />
       )}
     </Container>
   );

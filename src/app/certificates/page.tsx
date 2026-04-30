@@ -7,7 +7,8 @@ import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { FilterTagButton } from "@/components/shared/filter-tag-button";
+import { EmptyState } from "@/components/shared/empty-state";
 
 const allTags = Array.from(new Set(certificates.flatMap((c) => c.tags))).sort();
 
@@ -47,18 +48,12 @@ export default function CertificatesPage() {
       {/* Tag filter */}
       <div className="flex flex-wrap gap-2 mb-8">
         {allTags.map((tag) => (
-          <button
+          <FilterTagButton
             key={tag}
+            label={tag}
+            active={activeTag === tag}
             onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-            className={cn(
-              "rounded-full border px-3 py-1 text-xs transition-colors",
-              activeTag === tag
-                ? "border-foreground bg-foreground text-background font-medium"
-                : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
-            )}
-          >
-            {tag}
-          </button>
+          />
         ))}
       </div>
 
@@ -66,7 +61,6 @@ export default function CertificatesPage() {
         {filtered.length} certificate{filtered.length !== 1 ? "s" : ""}
       </p>
 
-      {/* Grid */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((cert) => (
@@ -116,15 +110,10 @@ export default function CertificatesPage() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-muted-foreground text-sm">No certificates match your filters.</p>
-          <button
-            onClick={() => { setSearch(""); setActiveTag(null); }}
-            className="mt-3 text-xs text-foreground underline"
-          >
-            Clear filters
-          </button>
-        </div>
+        <EmptyState
+          message="No certificates match your filters."
+          onClear={() => { setSearch(""); setActiveTag(null); }}
+        />
       )}
     </Container>
   );
