@@ -29,11 +29,11 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="sticky top-28 flex flex-col gap-3">
-      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+    <div className="sticky top-28 flex flex-col gap-3 max-h-[calc(100vh-8rem)]">
+      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground shrink-0">
         On this page
       </p>
-      <ul className="flex flex-col gap-1 border-l border-border">
+      <ul className="flex flex-col gap-1 border-l border-border overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:hsl(var(--border))_transparent]">
         {headings.map(({ id, text, level }) => (
           <li key={id}>
             <a
