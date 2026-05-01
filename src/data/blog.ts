@@ -26,6 +26,7 @@ export type BlogPost = {
   published: boolean;
   featured?: boolean;
   pinned?: boolean;
+  hidden?: boolean;
 };
 
 type CategoryStyle = {
@@ -156,6 +157,7 @@ export const blogPosts: BlogPost[] = [
     tags: ["Career", "Experience", "Software Engineering"],
     published: true,
     featured: true,
+    hidden: true,
     pinned: true,
   },
   {
@@ -198,6 +200,10 @@ export function getPostPriority(post: BlogPost): number {
 }
 
 export const publishedPosts = blogPosts
+  .filter((p) => p.published && !p.hidden)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+export const accessiblePosts = blogPosts
   .filter((p) => p.published)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
