@@ -8,6 +8,7 @@ import { cn, getExternalDomain } from "@/lib/utils";
 import { OptimizedImage } from "@/components/shared/optimized-image";
 import { SectionHeader } from "@/components/shared/section-header";
 import { PostCardMeta } from "@/components/shared/post-card-meta";
+import { ExternalLinkDialog } from "@/components/shared/external-link-dialog";
 import { Button } from "@/components/ui/button";
 
 function PreviewCardContent({ post }: { post: BlogPost }) {
@@ -79,18 +80,20 @@ export function BlogPreview() {
               transition={{ duration: 0.35, delay: i * 0.07, ease: "easeOut" }}
             >
               {post.externalUrl ? (
-                <a
-                  href={post.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
-                    gradient.base,
-                    gradient.hover
+                <ExternalLinkDialog url={post.externalUrl} title={post.title} coverImage={post.coverImage}>
+                  {(openDialog) => (
+                    <button
+                      onClick={openDialog}
+                      className={cn(
+                        "group w-full text-left flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
+                        gradient.base,
+                        gradient.hover
+                      )}
+                    >
+                      <PreviewCardContent post={post} />
+                    </button>
                   )}
-                >
-                  <PreviewCardContent post={post} />
-                </a>
+                </ExternalLinkDialog>
               ) : (
                 <Link
                   href={`/blog/${post.slug!}`}

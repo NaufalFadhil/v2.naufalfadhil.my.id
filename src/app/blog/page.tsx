@@ -11,6 +11,7 @@ import { OptimizedImage } from "@/components/shared/optimized-image";
 import { FilterTagButton } from "@/components/shared/filter-tag-button";
 import { EmptyState } from "@/components/shared/empty-state";
 import { PostCardMeta } from "@/components/shared/post-card-meta";
+import { ExternalLinkDialog } from "@/components/shared/external-link-dialog";
 
 const PAGE_SIZE = 10;
 
@@ -143,18 +144,20 @@ export default function BlogPage() {
             return (
               <article key={post.id}>
                 {post.externalUrl ? (
-                  <a
-                    href={post.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "group flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
-                      gradient.base,
-                      gradient.hover
+                  <ExternalLinkDialog url={post.externalUrl} title={post.title} coverImage={post.coverImage}>
+                    {(openDialog) => (
+                      <button
+                        onClick={openDialog}
+                        className={cn(
+                          "group w-full text-left flex flex-col sm:flex-row gap-4 rounded-xl border border-border border-l-2 bg-gradient-to-r shadow-sm transition-all duration-300 hover:shadow-md p-4 overflow-hidden",
+                          gradient.base,
+                          gradient.hover
+                        )}
+                      >
+                        <CardContent post={post} />
+                      </button>
                     )}
-                  >
-                    <CardContent post={post} />
-                  </a>
+                  </ExternalLinkDialog>
                 ) : (
                   <Link
                     href={`/blog/${post.slug!}`}
