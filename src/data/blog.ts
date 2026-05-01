@@ -132,6 +132,7 @@ export const blogPosts: BlogPost[] = [
     categories: ["Stock", "Story"],
     tags: ["AI", "Stock Market", "Investment"],
     published: true,
+    featured: true,
   },
   {
     id: "7",
@@ -162,22 +163,6 @@ export const blogPosts: BlogPost[] = [
     pinned: true,
   },
   {
-    id: "98",
-    slug: "3030-12-experience-enterprise-system",
-    externalUrl: "https://docs.naufalfadhil.my.id/docker/cheat-sheets",
-    title: "Docker Cheat Sheets: Essential Commands and Tips for Developers",
-    excerpt:
-      "A comprehensive collection of Docker cheat sheets covering essential commands, best practices, and tips for developers to quickly reference while working with Docker in development and production environments.",
-    coverImage: "/blogs/2024-12-experience-enterprise-system/cover.png",
-    date: "2024-12-01",
-    readTime: 2,
-    categories: ["Career", "Story"],
-    tags: ["Career", "Experience", "Software Engineering"],
-    published: true,
-    featured: true,
-    pinned: false,
-  },
-  {
     id: "9",
     slug: "2026-04-first-security-setup-vps",
     title: "First Security Setup on Your VPS: A Step-by-Step Guide",
@@ -189,6 +174,22 @@ export const blogPosts: BlogPost[] = [
     categories: ["Tech"],
     tags: ["Linux", "Security", "DevSecOps", "Cyber Security", "Infrastructure", "Cloud", "Best Practices"],
     published: true,
+  },
+  {
+    id: "10",
+    slug: "2026-05-docker-cheat-sheets",
+    externalUrl: "https://docs.naufalfadhil.my.id/docker/cheat-sheets",
+    title: "Docker Cheat Sheets: Essential Commands and Tips for Developers",
+    excerpt:
+      "A comprehensive collection of Docker cheat sheets covering essential commands, best practices, and tips for developers to quickly reference while working with Docker in development and production environments.",
+    coverImage: "/blogs/2026-05-docker-cheat-sheets/cover.png",
+    date: "2026-05-02",
+    readTime: 10,
+    categories: ["Tech"],
+    tags: ["Docker", "DevOps", "Cheat Sheet"],
+    published: true,
+    featured: false,
+    pinned: false,
   },
   {
     id: "99",

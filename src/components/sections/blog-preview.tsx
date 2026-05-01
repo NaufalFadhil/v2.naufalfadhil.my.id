@@ -41,7 +41,7 @@ function PreviewCardContent({ post }: { post: BlogPost }) {
         </div>
         <span className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground group-hover:text-foreground transition-colors">
           {post.externalUrl ? (
-            <>Read on <span className="underline decoration-blue-500">{getExternalDomain(post.externalUrl)}</span></>
+            <>Read on <span className="underline decoration-gray-500">{getExternalDomain(post.externalUrl)}</span></>
           ) : "Read article"}
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
         </span>

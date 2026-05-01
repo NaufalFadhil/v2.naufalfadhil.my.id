@@ -98,5 +98,16 @@ export const imageManifest: Record<string, { widths: number[]; base: string; ext
     ],
     "base": "/blogs/2026-04-stock-market-analysis-story/stock-story-profit",
     "ext": ".png"
+  },
+  "/blogs/2026-05-docker-cheat-sheets/cover.png": {
+    "widths": [
+      480,
+      768,
+      960,
+      1440,
+      1536
+    ],
+    "base": "/blogs/2026-05-docker-cheat-sheets/cover",
+    "ext": ".png"
   }
 };
