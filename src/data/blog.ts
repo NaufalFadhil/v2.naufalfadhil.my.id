@@ -158,7 +158,6 @@ export const blogPosts: BlogPost[] = [
     tags: ["Career", "Experience", "Software Engineering"],
     published: true,
     featured: true,
-    hidden: true,
     pinned: true,
   },
   {
@@ -173,6 +172,23 @@ export const blogPosts: BlogPost[] = [
     categories: ["Tech"],
     tags: ["Linux", "Security", "DevSecOps", "Cyber Security", "Infrastructure", "Cloud", "Best Practices"],
     published: true,
+  },
+  {
+    id: "99",
+    slug: "2024-11-best-laravel-project-structure",
+    title: "My Experience Joining an Enterprise System as an Associate Software Engineer",
+    excerpt:
+      "A personal account of my journey joining an enterprise system as an Associate Software Engineer, the challenges I faced, and the lessons I learned along the way.",
+    coverImage: "/blogs/2024-12-experience-enterprise-system/cover.png",
+    date: "2024-12-01",
+    readTime: 2,
+    categories: ["Career", "Story"],
+    tags: ["Career", "Experience", "Software Engineering"],
+    published: false,
+    featured: false,
+    hidden: true,
+    pinned: false,
+    exclusiveSlug: "gojek-99999",
   },
 ];
 

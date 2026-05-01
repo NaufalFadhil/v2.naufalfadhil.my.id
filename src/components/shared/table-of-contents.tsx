@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { type Heading } from "@/lib/mdx";
 
-export function TableOfContents({ headings }: { headings: Heading[] }) {
+export function TableOfContents({ headings, footer }: { headings: Heading[]; footer?: React.ReactNode }) {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
     return () => observer.disconnect();
   }, [headings]);
 
-  if (headings.length === 0) return null;
+  if (headings.length === 0) return footer ? <div className="sticky top-28">{footer}</div> : null;
 
   return (
     <div className="sticky top-28 flex flex-col gap-3 max-h-[calc(100vh-8rem)]">
@@ -50,6 +50,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
           </li>
         ))}
       </ul>
+      {footer && <div className="shrink-0">{footer}</div>}
     </div>
   );
 }

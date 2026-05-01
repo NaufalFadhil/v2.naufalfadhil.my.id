@@ -17,6 +17,7 @@ import { MdxPre } from "@/components/shared/mdx-pre";
 import { MdxImage } from "@/components/shared/mdx-image";
 import { TableOfContents } from "@/components/shared/table-of-contents";
 import { ZoomableImage } from "@/components/shared/zoomable-image";
+import { CopyLinkButton } from "@/components/shared/copy-link-button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -203,7 +204,7 @@ export default async function ExclusivePostPage({ params }: Props) {
 
         {/* ToC sidebar */}
         <aside className="hidden lg:block">
-          <TableOfContents headings={headings} />
+          <TableOfContents headings={headings} footer={<CopyLinkButton />} />
         </aside>
       </div>
     </Container>
