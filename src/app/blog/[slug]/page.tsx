@@ -21,7 +21,7 @@ import { ZoomableImage } from "@/components/shared/zoomable-image";
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return publishedPosts.map((post) => ({ slug: post.slug }));
+  return publishedPosts.filter((post) => post.slug).map((post) => ({ slug: post.slug! }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

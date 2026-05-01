@@ -15,7 +15,7 @@ export type BlogCategory =
 
 export type BlogPost = {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   excerpt: string;
   coverImage?: string;
@@ -28,6 +28,7 @@ export type BlogPost = {
   pinned?: boolean;
   hidden?: boolean;
   exclusiveSlug?: string;
+  externalUrl?: string;
 };
 
 type CategoryStyle = {
@@ -159,6 +160,22 @@ export const blogPosts: BlogPost[] = [
     published: true,
     featured: true,
     pinned: true,
+  },
+  {
+    id: "98",
+    slug: "3030-12-experience-enterprise-system",
+    externalUrl: "https://docs.naufalfadhil.my.id/docker/cheat-sheets",
+    title: "Docker Cheat Sheets: Essential Commands and Tips for Developers",
+    excerpt:
+      "A comprehensive collection of Docker cheat sheets covering essential commands, best practices, and tips for developers to quickly reference while working with Docker in development and production environments.",
+    coverImage: "/blogs/2024-12-experience-enterprise-system/cover.png",
+    date: "2024-12-01",
+    readTime: 2,
+    categories: ["Career", "Story"],
+    tags: ["Career", "Experience", "Software Engineering"],
+    published: true,
+    featured: true,
+    pinned: false,
   },
   {
     id: "9",

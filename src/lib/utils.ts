@@ -31,6 +31,14 @@ export function calculateDuration(start: string, end?: string): string {
   return `${years} yr${years > 1 ? "s" : ""} ${remainingMonths} mo${remainingMonths > 1 ? "s" : ""}`;
 }
 
+export function getExternalDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "external site";
+  }
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()
