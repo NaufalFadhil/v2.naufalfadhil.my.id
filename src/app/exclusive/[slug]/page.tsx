@@ -125,7 +125,7 @@ export default async function ExclusivePostPage({ params }: Props) {
 
   await new Promise((r) => setTimeout(r, 400));
 
-  const mdxData = getBlogContent(post.slug);
+  const mdxData = post.slug ? getBlogContent(post.slug) : null;
   const headings = mdxData ? extractHeadings(mdxData.content) : [];
 
   return (
