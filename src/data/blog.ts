@@ -27,6 +27,7 @@ export type BlogPost = {
   featured?: boolean;
   pinned?: boolean;
   hidden?: boolean;
+  exclusiveSlug?: string;
 };
 
 type CategoryStyle = {
@@ -203,8 +204,8 @@ export const publishedPosts = blogPosts
   .filter((p) => p.published && !p.hidden)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-export const accessiblePosts = blogPosts
-  .filter((p) => p.published)
+export const exclusivePosts = blogPosts
+  .filter((p) => p.published && p.hidden && !!p.exclusiveSlug)
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 export const pinnedPosts = publishedPosts.filter((p) => p.pinned);

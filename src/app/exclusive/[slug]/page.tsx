@@ -7,7 +7,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
 import { visit } from "unist-util-visit";
 import type { Element } from "hast";
-import { publishedPosts, categoryStyle } from "@/data/blog";
+import { exclusivePosts, categoryStyle } from "@/data/blog";
 import { getBlogContent, extractHeadings, slugifyHeading } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 import { Container } from "@/components/layout/container";
@@ -21,17 +21,18 @@ import { ZoomableImage } from "@/components/shared/zoomable-image";
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return publishedPosts.map((post) => ({ slug: post.slug }));
+  return exclusivePosts.map((post) => ({ slug: post.exclusiveSlug! }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = publishedPosts.find((p) => p.slug === slug);
+  const post = exclusivePosts.find((p) => p.exclusiveSlug === slug);
   if (!post) return {};
   return {
     title: post.title,
     description: post.excerpt,
     openGraph: post.coverImage ? { images: [post.coverImage] } : undefined,
+    robots: { index: false, follow: false },
   };
 }
 
@@ -116,22 +117,22 @@ const mdxComponents = {
   pre: MdxPre,
 };
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function ExclusivePostPage({ params }: Props) {
   const { slug } = await params;
-  const post = publishedPosts.find((p) => p.slug === slug);
-  if (!post) notFound();
+  const post = exclusivePosts.find((p) => p.exclusiveSlug === slug);
+  if (!post || !post.coverImage) notFound();
 
   await new Promise((r) => setTimeout(r, 400));
 
-  const mdxData = getBlogContent(slug);
+  const mdxData = getBlogContent(post.slug);
   const headings = mdxData ? extractHeadings(mdxData.content) : [];
 
   return (
     <Container className="pt-28 pb-20">
       <Button variant="ghost" size="sm" asChild className="mb-8 -ml-2">
-        <Link href="/blog">
+        <Link href="/">
           <ArrowLeft className="h-4 w-4" />
-          Back to Blog
+          Back to Home
         </Link>
       </Button>
 
@@ -139,6 +140,10 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Article */}
         <article className="min-w-0 max-w-2xl">
           <header className="mb-8">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400 mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              Exclusive Content
+            </div>
             <div className="flex flex-wrap items-center gap-1.5 mb-4">
               {post.categories.map((cat) => (
                 <span key={cat} className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${categoryStyle[cat].className}`}>
@@ -166,15 +171,13 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </header>
 
-          {post.coverImage && (
-            <div className="w-full mb-10 rounded-xl overflow-hidden border border-border">
-              <ZoomableImage
-                src={post.coverImage}
-                alt={post.title}
-                className="w-full h-auto"
-              />
-            </div>
-          )}
+          <div className="w-full mb-10 rounded-xl overflow-hidden border border-border">
+            <ZoomableImage
+              src={post.coverImage}
+              alt={post.title}
+              className="w-full h-auto"
+            />
+          </div>
 
           <div className="prose prose-zinc dark:prose-invert max-w-none font-sans
             prose-p:text-foreground/75 prose-p:leading-relaxed
